@@ -17,7 +17,7 @@ function reducer(state, action){
         case 'DARK_MODE':{
             //repurposed to add to cart
             const newItem = action.payload.order
-            const existItem = state.cart.cartItems.find((item) => item._id === newItem._id)
+            const existItem = state.cart.cartItems.find((item) => item._id === newItem._id )
             
             const cartItems = existItem ? state.cart.cartItems.map((item) => item.name === existItem.name?newItem : item)
             : [...state.cart.cartItems, newItem]
@@ -50,11 +50,15 @@ function reducer(state, action){
         case 'SAVE_PAYMENT_METHOD':{
             return {...state, cart:{...state.cart, paymentMethod: action.payload}}
         }
+
+        case 'CART_CLEAR':{
+            return {...state, cart:{...state.cart, cartItems:[], shippingAddress:{}, paymentMethod:''}}
+        }
             
-        default:
+        default:{
             console.log("default")
             return state
-        
+        }
     }
 }
 

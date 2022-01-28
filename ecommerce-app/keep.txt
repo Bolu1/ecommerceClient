@@ -1,105 +1,4 @@
-import React, { useContext, useEffect } from 'react'
-import { Store } from '../utils/Store'
-import Layout from "../componets/layout"
-import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import {useRouter} from 'next/router'
-import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
-import axios from 'axios'
-import getError from '../utils/error'
-import Cookies from 'js-cookie'
-
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
-
-function PlaceOrder() {
-    
-    const router = useRouter()
-    const {state, dispatch} = useContext(Store)
-    const {cart, userInfo} = state
-    const {cart: {cartItems, shippingAddress, paymentMethod}} = state
-    const [error, setError] = useState('')
-    
-    //closes the cart and routes to the home page
-    const close =() =>{
-        router.push('/')
-    }
-    //To update the quantity of order
-       
-    const round2 = num => Math.round(num*100 + Number.EPSILON) /100
-    const itemsPrice = round2(cart.cartItems.reduce((a,c) => a + c.quantity * c.price, 0))   
-    const shippingPrice = itemsPrice > 200 ? 0 : 15
-    const taxPrice = round2(itemsPrice * 0.15)
-    const totalPrice = round2(itemsPrice + shippingPrice+taxPrice)
-
-    useEffect(()=>{
-        console.log(cartItems)  
-        if(!shippingAddress.address){
-            router.push('/shipping')
-        }
-        if(!userInfo){
-            router.push('/login?redirect=/payment')
-        }
-        if(cartItems.length === 0){
-            router.push('/cart')
-        }
-    },[])
-
-    const placeOrderHandler = async() =>{
-        
-        try{
-            const {data} = await axios.post('/api/orders', {
-                orderItems: cartItems,
-                shippingAddress,
-                itemsPrice,
-                shippingAddress,
-                shippingPrice,
-                paymentMethod,
-                taxPrice,
-                totalPrice
-            },{
-                headers: {
-                    authorization: `Bearer ${userInfo.token}`
-                }
-            })
-            dispatch({type: 'CART_CLEAR'})
-            Cookies.remove('cartItems')
-            router.push(`/order/${data._id}`)
-        }catch(err){
-            const error = err.response && err.response.data && err.response.data.message
-            ?err.response.data.message
-            : err.message
-            setError(error)
-        }
-    }
-
-    return (
-        <>
-        { error != "" &&(
+{ error != "" &&(
               
               <div className="w-full fixed text-white bg-red-500">
               <div className="container flex items-center justify-between px-6 py-4 mx-auto">
@@ -119,7 +18,7 @@ function PlaceOrder() {
               </div>
           </div>
           )}
-        <Layout title="Place Order">
+        <Layout title="Order Details">
                 
                 <div>
                 {/* stage top nvabar */}
@@ -140,23 +39,23 @@ function PlaceOrder() {
               <div className="w-screen max-w-full">
                 <div className="h-full w-full flex flex-col bg-white shadow-xl ">
                   <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
-                      <h1 className="text-2xl font-bold">Place Order</h1>
+                      <h1 className="text-2xl font-bold">Order {orderId}</h1>
                         <br/>
                         <br/>
                         <h1 className='font-medium text-lg'>Shipping Address</h1>
                         <br/>
                         {/* since the address is not an array i cannot map  */}
                         <div className='flex space-x-3'>
-                            <p>{cart.shippingAddress.name},</p>
-                            <p>{cart.shippingAddress.code},</p>
-                            <p>{cart.shippingAddress.address},</p>
-                            <p>{cart.shippingAddress.city},</p>
-                            <p>{cart.shippingAddress.country}</p>
+                            <p>{shippingAddress.name},</p>
+                            <p>{shippingAddress.code},</p>
+                            <p>{shippingAddress.address},</p>
+                            <p>{shippingAddress.city},</p>
+                            <p>{shippingAddress.country}</p>
                         </div>
                         <br/>
                         <h1 className='font-medium text-lg'>Payment Method</h1>
                         <br/>
-                        <p>{cart.paymentMethod}</p>
+                        <p>{paymentMethod}</p>
                         <br/>
                    
                         {/* {cart.cartItems?(  */}
@@ -164,7 +63,7 @@ function PlaceOrder() {
                       <h1 className="text-lg font-medium text-gray-900">Order Items</h1>
                             {/* ):<div></div> } */}
                     </div>
-                    {cart.cartItems?(   
+                    {orderItems?(   
                     <div className="mt-8">
                       <div className="flow-root">
                         <ul role="list" className="-my-6 divide-y divide-gray-200">
@@ -227,35 +126,10 @@ function PlaceOrder() {
                       <p>${totalPrice}</p>
                     </div>
                    
-                    <div className="mt-6">
-                      <a
-                       
-                        className="flex justify-center cursor-pointer items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                        onClick={placeOrderHandler}
-                      >
-                        Place order
-                      </a>
-                    </div>
-                    <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
-                      <p>
-                        or{' '}
-                        <button
-                          type="button"
-                          className="text-indigo-600 font-medium hover:text-indigo-500"
-                          onClick={()=>{router.push('/')}}
-                        > 
-                          Continue Shopping<span aria-hidden="true"> &rarr;</span>
-                        </button>
-                      </p>
-                    </div>
                   </div>
                 </div>
               </div>
           
     </div>
             
-        </Layout></>
-    )
-}
-
-export default dynamic(() => Promise.resolve(PlaceOrder), {ssr: false})
+        </Layout>

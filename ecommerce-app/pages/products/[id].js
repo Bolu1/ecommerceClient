@@ -24,6 +24,7 @@ export default function Example(props) {
   const {dispatch, state} = useContext(Store)
   const [selectedColor, setSelectedColor] = useState(props.colors[0]);
   const [selectedSize, setSelectedSize] = useState(props.sizes[2]);
+  const [sSize, setSsize] = useState([])
   const [quantity, setQuantity] = useState(1);
 
   const addToCart = async() =>{
@@ -35,12 +36,15 @@ export default function Example(props) {
       window.alert('Sorry. Product is out of stock')
       return
     }
+    
     const existItem = state.cart.cartItems.find(x=>x._id === props._id)
+    //array that holds sizes
     const quantity = existItem? existItem.quantity + 1: 1
     if(data.countInStock <quantity){
       window.alert('Sorry, you have selected more than we have in stock')
       return
     }
+    
     const order = {...props, selectedColor, selectedSize, quantity}
     // console.log(order)
     dispatch({type:'DARK_MODE', payload:{order, quantity: 1 }})
