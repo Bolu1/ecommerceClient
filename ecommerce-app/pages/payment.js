@@ -87,9 +87,9 @@ function Payment() {
                 </div>
                 <br/>
                 <div className="form-check">
-                <input onChange={(e)=>{setPaymentMethod("Stripe")}} className="form-check-input onChange={(e)=>{setPaymentMethod(e.target.value)}} appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="Stripe" value="Stripe" />
+                <input onChange={(e)=>{setPaymentMethod("PayStack")}} className="form-check-input onChange={(e)=>{setPaymentMethod(e.target.value)}} appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="PayStack" value="PayStack" />
                 <label className="form-check-label inline-block text-gray-800 font-medium" htmlFor="flexRadioDefault2">
-                    Stripe
+                    PayStack
                 </label>
                 </div>
                 <br/>

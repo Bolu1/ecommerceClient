@@ -72,14 +72,14 @@ const resources = [
     name: "Profile",
     description:
       "Get all of your questions answered in our forums or contact support.",
-    href: "#",
+    href: "/profile",
     icon: SupportIcon,
   },
   {
-    name: "Account",
+    name: "Orders",
     description:
       "Learn how to maximize our platform to get the most out of it.",
-    href: "#",
+    href: "/order-history",
     icon: BookmarkAltIcon,
   },
   {
@@ -397,27 +397,29 @@ export default function Layout({ title, children }) {
                       <Popover.Panel className="absolute z-10 left-1/2 transform -translate-x-1/2 mt-3  px-2 w-40 max-w-md sm:px-0">
                         <div className="rounded-lg text-center shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                           <div className="relative text-center grid gap-2 bg-white py-1 sm:gap-8 sm:p-8">
-                            {resources.map((item) => (
-                              <a
-                                key={item.name}
-                                
+                              <a 
+                              href='/profile'
                                 className="-m-3 cursor-pointer text-center  items-start rounded-lg hover:bg-gray-50"
                               >
-                                <div className="">
-                                  { item.name != "Logout"?(
-                                  <p href={item.href} className="text-base text-center text-gray-900">
-                                     {item.name}
-                                  </p>
-                                    ):(
-                                      <p style={{color:"red"}} onClick={logoutHandler} className="text-base text-center text-red-500">
-                                      {item.name}
+                                      <p href='/profile' className="text-base text-center ">
+                                      profile
                                    </p>
-                                    )}
-                                   
-                                  
-                                </div>
                               </a>
-                            ))}
+                              <a 
+                              href='/order-history'
+                                className="-m-3 cursor-pointer text-center  items-start rounded-lg hover:bg-gray-50"
+                              >
+                                      <p href='/order-history' className="text-base text-center ">
+                                      orders
+                                   </p>
+                              </a>
+                              <a
+                                className="-m-3 cursor-pointer text-center  items-start rounded-lg hover:bg-gray-50"
+                              >
+                                      <p style={{color:"red"}} onClick={logoutHandler} className="text-base text-center text-red-500">
+                                      logout
+                                   </p>
+                              </a>
                           </div>
                         </div>
                       </Popover.Panel>
