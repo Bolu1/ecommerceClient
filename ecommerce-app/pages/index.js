@@ -2,7 +2,6 @@ import Head from 'next/head'
 import Link from "next/Link"
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import Navbar from '../componets/Navbar'
 import Layout from '../componets/Layout'
 import  data from '../utils/data'
 import { Fragment } from 'react'
@@ -67,11 +66,11 @@ export default function Home(props) {
       <div className="max-w-2xl mx-auto py-16  sm:py-2 sm:px-2 lg:max-w-7xl lg:px-2">
       <h1 className=" my-10 font-bold text-4xl text-center ">Products</h1>
 
-
-      <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+      
+      <div className="grid grid-cols-2 px-3 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         {props.props.map((product) => (
           
-          <Link key={product.id} href={`/products/${product._id}`} className="group">
+          <Link key={product.id} href={`/products/${product._id}`} className="group ">
           <a>
             <div className="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
               <img
@@ -88,6 +87,7 @@ export default function Home(props) {
       </div>
       </div>
       </div>
+      
     </Layout>
   
    )

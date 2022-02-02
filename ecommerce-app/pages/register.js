@@ -35,17 +35,21 @@ function Login() {
     e.preventDefault()
     if(password !== cpassword){
         setError("Passwords don't match")
-        return
+       
     }
     try{
     const {data} = await axios.post('/api/users/register', {name, email, password})
     const value = JSON.stringify(data)
+    if(data == "This email is already in use"){
+      setError(data ? data : 'successful')
+      return
+    }
     dispatch({type:'USER_LOGIN', payload:data})
     Cookies.set('userInfo', value)
     router.push(redirect || '/')
+    setError('successful')
     }catch(err){
-      console.log(err)
-      setError(err.response.data ? err.response.data.message : 'Invalid Login Parameters')
+      setError(err.response.data ? err.response.data.message : 'An error occured')
     }
   }
 
@@ -53,7 +57,7 @@ function Login() {
         <Layout title="Register">
             {/* //error alert */}
             
-            { error.length >= 3 &&(
+            { error !="" &&error != "successful" &&(
               
               <div className="w-full text-white bg-red-500">
               <div className="container flex items-center justify-between px-6 py-4 mx-auto">
@@ -76,7 +80,7 @@ function Login() {
 
           {/* sucess alert */}
 
-          { error == "auth successful" &&(
+          { error == "successful" &&(
               
                       <div className="w-full text-white bg-emerald-500">
                       <div className="container flex items-center justify-between px-6 py-4 mx-auto">
@@ -124,7 +128,7 @@ function Login() {
                   autoComplete="name"
                   required
                   className="appearance-none  relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
+                  placeholder="Username"
                   value={name}
                   onChange={e=>setName(e.target.value)} 
                   />
@@ -158,6 +162,7 @@ function Login() {
                   id="password"
                   name="password"
                   type="password"
+                  minlength="8"
                   autoComplete="current-password"
                   required
                   value={password}

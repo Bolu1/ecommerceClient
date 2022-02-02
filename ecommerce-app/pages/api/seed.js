@@ -11,7 +11,6 @@ handler.get(async (req,res) =>{
     await db.connect()
     await Users.deleteMany()
     await Product.deleteMany()
-    console.log(usersData[0].users)
     await Users.insertMany(usersData[0].users)
     await Product.insertMany(data)
     await db.disconnect()

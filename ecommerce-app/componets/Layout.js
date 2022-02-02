@@ -27,38 +27,50 @@ import { useRouter } from "next/router";
 // the contents of the mobile nav
 const solutions = [
   {
-    name: "Products",
+    
+    name: "Home",
     description:
       "Get a better understanding of where your traffic is coming from.",
-    href: "#",
-    icon: ChartBarIcon,
+    href: "/",
+    icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+  </svg>,
   },
   {
-    name: "Categories",
+    name: "Search",
     description: "Speak directly to your customers in a more meaningful way.",
-    href: "#",
-    icon: CursorClickIcon,
+    href: "/search",
+    icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+  </svg>,
   },
   {
     name: "Shipping",
     description: "Your customers' data will be safe and secure.",
     href: "/shipping",
-    icon: ShieldCheckIcon,
+    icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+  </svg>,
   },
 
   {
-    name: "About Us",
+    name: "About",
     description: "Your customers' data will be safe and secure.",
-    href: "#",
-    icon: ShieldCheckIcon,
+    href: "/about",
+    icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+  </svg>,
   },
 
   {
     name: "Bag",
     description:
       "Build strategic funnels that will drive your customers to convert",
-    href: "#",
-    icon: RefreshIcon,
+    href: "/cart",
+    icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+  </svg>,
   },
 ];
 const callsToAction = [
@@ -149,74 +161,13 @@ export default function Layout({ title, children }) {
               </Popover.Button>
             </div>
             <Popover.Group as="nav" className="hidden md:flex space-x-10">
-              <Popover className="relative">
-                {({ open }) => (
-                  <>
-                    <Popover.Button
-                      className={classNames(
-                        open ? "text-gray-900" : "text-gray-500",
-                        "group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      )}
-                    >
-                      <span>Products</span>
-                      
-                    </Popover.Button>
-
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-200"
-                      enterFrom="opacity-0 translate-y-1"
-                      enterTo="opacity-100 translate-y-0"
-                      leave="transition ease-in duration-150"
-                      leaveFrom="opacity-100 translate-y-0"
-                      leaveTo="opacity-0 translate-y-1"
-                    >
-                      <Popover.Panel className="absolute z-10 -ml-4 mt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
-                        <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                          <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                            {solutions.map((item) => (
-                              <a
-                                key={item.name}
-                                href={item.href}
-                                className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
-                              >
-                                <item.icon
-                                  className="flex-shrink-0 h-6 w-6 text-indigo-600"
-                                  aria-hidden="true"
-                                />
-                                <div className="ml-4">
-                                  <p className="text-base font-medium text-gray-900">
-                                    {item.name}
-                                  </p>
-                                  <p className="mt-1 text-sm text-gray-500">
-                                    {item.description}
-                                  </p>
-                                </div>
-                              </a>
-                            ))}
-                          </div>
-                          <div className="px-5 py-5 bg-gray-50 space-y-6 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">
-                            {callsToAction.map((item) => (
-                              <div key={item.name} className="flow-root">
-                                <a
-                                  href={item.href}
-                                  className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
-                                >
-                                  <item.icon
-                                    className="flex-shrink-0 h-6 w-6 text-gray-400"
-                                    aria-hidden="true"
-                                  />
-                                  <span className="ml-3">{item.name}</span>
-                                </a>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </Popover.Panel>
-                    </Transition>
-                  </>
-                )}
-              </Popover>
+              
+            <a
+                href="/search"
+                className="text-base font-medium text-gray-500 hover:text-gray-900"
+              >
+                Search
+              </a>
 
               <a
                 href="#"
@@ -225,107 +176,20 @@ export default function Layout({ title, children }) {
                 Categories
               </a>
 
-              <Link
+              <a
                 href="/shipping"
-                className="text-base font-medium text-gray-500 hover:text-gray-900"
-              >
-                <a
                 className="text-base font-medium text-gray-500 hover:text-gray-900"
               >
                 Shipping
               </a>
-              </Link>
 
-              <Popover className="relative">
-                {({ open }) => (
-                  <>
-                    <Popover.Button
-                      className={classNames(
-                        open ? "text-gray-900" : "text-gray-500",
-                        "group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      )}
-                    >
-                      <span>About us</span>
-                      {/* <ChevronDownIcon
-                        className={classNames(
-                          open ? "text-gray-600" : "text-gray-400",
-                          "ml-2 h-5 w-5 group-hover:text-gray-500"
-                        )}
-                        aria-hidden="true"
-                      /> */}
-                    </Popover.Button>
+              <a
+                href="/aboutus"
+                className="text-base font-medium text-gray-500 hover:text-gray-900"
+              >
+                About
+              </a>
 
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-200"
-                      enterFrom="opacity-0 translate-y-1"
-                      enterTo="opacity-100 translate-y-0"
-                      leave="transition ease-in duration-150"
-                      leaveFrom="opacity-100 translate-y-0"
-                      leaveTo="opacity-0 translate-y-1"
-                    >
-                      <Popover.Panel className="absolute z-10 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-md sm:px-0">
-                        <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                          <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                            {resources.map((item) => (
-                              <a
-                                key={item.name}
-                                href={item.href}
-                                className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
-                              >
-                                <item.icon
-                                  className="flex-shrink-0 h-6 w-6 text-indigo-600"
-                                  aria-hidden="true"
-                                />
-                                <div className="ml-4">
-                                  <p className="text-base font-medium text-gray-900">
-                                    {item.name}
-                                  </p>
-                                  <p className="mt-1 text-sm text-gray-500">
-                                    {item.description}
-                                  </p>
-                                </div>
-                              </a>
-                            ))}
-                          </div>
-                          <div className="px-5 py-5 bg-gray-50 sm:px-8 sm:py-8">
-                            <div>
-                              <h3 className="text-sm tracking-wide font-medium text-gray-500 uppercase">
-                                Recent Posts
-                              </h3>
-                              <ul role="list" className="mt-4 space-y-4">
-                                {recentPosts.map((post) => (
-                                  <li
-                                    key={post.id}
-                                    className="text-base truncate"
-                                  >
-                                    <a
-                                      href={post.href}
-                                      className="font-medium text-gray-900 hover:text-gray-700"
-                                    >
-                                      {post.name}
-                                    </a>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div className="mt-5 text-sm">
-                              <a
-                                href="#"
-                                className="font-medium text-indigo-600 hover:text-indigo-500"
-                              >
-                                {" "}
-                                View all posts{" "}
-                                <span aria-hidden="true">&rarr;</span>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </Popover.Panel>
-                    </Transition>
-                  </>
-                )}
-              </Popover>
             </Popover.Group>
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
               {cart.cartItems.length != 0 ? (
@@ -371,18 +235,14 @@ export default function Layout({ title, children }) {
                     <Popover.Button
                       className={classNames(
                         open ? "" : "",
-                        "group  rounded-md inline-flex items-center text-base font-bold  ",
-                        "ml-8 whitespace-nowrap cursor-pointer inline-flex items-center justify-center px-4 py-2   rounded-md  text-base font-bold text-indigo-600 hover:text-indigo-700"
+                        "group  rounded-md inline-flex items-center text-base font-medium  ",
+                        "ml-8 whitespace-nowrap cursor-pointer inline-flex items-center justify-center px-4 py-2   rounded-md  text-base font-bold "
                       )}
                     >
+                      <div className="relative flex-shrink-0 px-2">
+                        <img src="https://source.unsplash.com/50x50/?portrait" alt="" className="w-12 h-12 border rounded-full dark:bg-coolGray-500 dark:border-coolGray-700"/>
+                      </div>
                       <span>{userInfo.name}</span>
-                      {/* <ChevronDownIcon
-                        className={classNames(
-                          open ? "text-gray-600" : "text-gray-400",
-                          "ml-2 h-5 w-5 group-hover:text-gray-500"
-                        )}
-                        aria-hidden="true"
-                      /> */}
                     </Popover.Button>
 
                     <Transition
@@ -448,7 +308,7 @@ export default function Layout({ title, children }) {
         >
           <Popover.Panel
             focus
-            className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+            className="relative  top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
           >
             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
               <div className="pt-5 pb-6 px-5">
@@ -475,10 +335,10 @@ export default function Layout({ title, children }) {
                         href={item.href}
                         className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
                       >
-                        <item.icon
-                          className="flex-shrink-0 h-6 w-6 text-indigo-600"
-                          aria-hidden="true"
-                        />
+                        <div className="flex-shrink-0 h-6 w-6 text-indigo-600"
+                          aria-hidden="true">
+                            {item.icon}
+                        </div>
                         <span className="ml-3 text-base font-medium text-gray-900">
                           {item.name}
                         </span>
@@ -497,10 +357,11 @@ export default function Layout({ title, children }) {
                   </nav>
                 </div>
               </div>
+              {!userInfo ? (
               <div className="py-6 px-5 space-y-6">
                 <div>
                   <a
-                    href="#"
+                    href="/register"
                     className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                   >
                     Sign up
@@ -508,23 +369,48 @@ export default function Layout({ title, children }) {
                   <p className="mt-6 text-center text-base font-medium text-gray-500">
                     Existing customer?{" "}
                     <a
-                      href="#"
+                      href="/login"
                       className="text-indigo-600 hover:text-indigo-500"
                     >
                       Sign in
                     </a>
                   </p>
                 </div>
-              </div>
+              </div>): 
+                  <div className="py-4 px-4 space-x-4 flex">
+                      
+                      <div className="relative flex-shrink-0 px-2">
+                        <img src="https://source.unsplash.com/50x50/?portrait" alt="" className="w-12 h-12 border rounded-full dark:bg-coolGray-500 dark:border-coolGray-700"/>
+                      </div>
+
+                      <Link href="/profile" >
+                        <h1 className="font-medium py-3 px-4 cursor-pointer">Profile</h1>
+                      </Link>
+
+                      <Link href="/orders" >
+                        <h1 className="font-medium py-3 px-4 cursor-pointer">Orders</h1>
+                      </Link>
+
+                      <div onClick={logoutHandler}>
+                        <h1 className="font-medium py-3 px-4 cursor-pointer" style={{color: "red"}}>Logout</h1>
+                      </div>
+
+                  </div>
+              }
             </div>
           </Popover.Panel>
         </Transition>
       </Popover>
       
-      {/* dcba1214 final account */}
+     {/* back to top */}
          
-
+      <div style={{top: "90vh", right:"10vh"}} onClick={()=>router.push('#')} className="flex-shrink-0 cursor-pointer fixed h-6 w-6 bg-white rounded-md text-indigo-600" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" />
+        </svg>
+      </div>
       <div style={{ minHeight: "60vh" }}>{children}</div>
+     
       
       {/* //fotter */}
 

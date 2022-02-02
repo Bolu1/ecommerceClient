@@ -44,7 +44,7 @@ function OrderHistory() {
     <>
       {order && (
         <Layout title="Orders History">
-          <div className="container p-6 mx-auto :bg-coolGray-800 :text-coolGray-100">
+          <div style={{minHeight:"100vh"}} className="container p-6 mx-auto :bg-coolGray-800 :text-coolGray-100">
             <h2 className="mb-6 text-2xl font-semibold leading-tight">
               Orders
             </h2>
@@ -102,8 +102,7 @@ function OrderHistory() {
                         <td className="p-3 md:p-5">
                           <Link href={`/order/${order._id}`}>
                             <a
-                              style={{ color: "blue" }}
-                              className="px-8 py-3 font-semibold rounded bg-indigo-600 text-indigo-600"
+                              className="px-8 py-3 font-semibold rounded bg-indigo-600 text-white"
                             >
                               Details
                             </a>
@@ -116,6 +115,7 @@ function OrderHistory() {
               </table>
             </div>
           </div>
+          
         </Layout>
       )}
     </>
