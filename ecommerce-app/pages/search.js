@@ -12,6 +12,7 @@ import { useContext, useEffect } from "react";
 import { Store } from "../utils/Store";
 import Product from '../models/Product'
 import axios from 'axios'
+import ReactPaginate from 'react-paginate'
 
 
 
@@ -35,6 +36,28 @@ export default function Search(props) {
             console.log(err)
         }
         
+    }
+
+    const pagSearch = async(page) =>{
+        
+        try{
+
+            const {data} = await axios.post(`/api/products/search?page=${page}`, {search})
+            setProducts(data)
+        }catch(err){
+            console.log(err)
+        }
+        
+    }
+
+    const pagCat = async(page) =>{
+        try{
+            
+            const {data} = await axios.post(`/api/products/category?page=${page}`, {search, category})
+            setProducts(data)
+        }catch(err){
+            console.log(err)
+        }
     }
 
     const scatHandler = async(e) =>{
@@ -115,6 +138,15 @@ export default function Search(props) {
           });
     }
 
+    const handlePageClick = (data) =>{
+        console.log(data.selected)
+        {category ==""?(
+                pagSearch(data.selected)
+            ):
+            pagCat(data.selected)
+        }
+    }
+
     useEffect(() => {
         
         try{
@@ -127,14 +159,7 @@ export default function Search(props) {
             console.log(err)
         }
     }, []);
-
-    // const changeHandler = (cat) =>{
-    //     setSearch("")
-    //     setCategory
-        
-    // }
     
-
   return(
    <div>
        <Layout>
@@ -221,7 +246,7 @@ export default function Search(props) {
 
             {/* products */}
         <>
-        {products?(
+        {products.length>0?(
             <div className="grid grid-cols-1 p-3 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         {products.map((product) => (
           
@@ -241,12 +266,32 @@ export default function Search(props) {
         ))}
         
       </div>):
-        <h1 className='text-center text-4xl'>No Item Found</h1>
+        <h1  className='text-center self-center lg:ml-80 md:ml-60 sm:ml-20  text-4xl '>No Item Found</h1>
       }
 
       </>
             
     </div>
+    <div className='flex justify-center py-5 '>
+       
+       <ReactPaginate 
+       previousLabel={'previous'}
+       nextLabel={'next'}
+       breakLabel={'...'}
+       pageCount={25}
+       marginPageDisplayed={2}
+       pageRangeDisplayed={3}
+       onPageChange={handlePageClick}
+       containerClassName={'flex'}
+       pageLinkClassName={'items-center hidden px-4 py-2 mx-1 transition-colors duration-200 transform bg-white rounded-md sm:flex :bg-gray-900 :text-gray-200 hover:bg-blue-600 :hover:bg-blue-500 hover:text-white :hover:text-gray-200'}
+       previousClassName={'flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-not-allowed :bg-gray-900 :text-gray-600'}
+       nextClassName={'flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-not-allowed :bg-gray-900 :text-gray-600'}
+       // breakClassName={'hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md sm:inline :bg-gray-900 :text-gray-200 hover:bg-blue-500 :hover:bg-blue-500 hover:text-white :hover:text-gray-200'}
+       // breakLinkClassName={'hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md sm:inline :bg-gray-900 :text-gray-200 hover:bg-blue-500 :hover:bg-blue-500 hover:text-white :hover:text-gray-200'}
+       activeClassName={'text-indigo-600 '}
+       />
+ 
+     </div>
 
        </Layout>
   </div>

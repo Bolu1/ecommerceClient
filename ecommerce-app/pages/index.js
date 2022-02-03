@@ -3,6 +3,7 @@ import Link from "next/Link"
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Layout from '../componets/Layout'
+import Pagination from '../componets/Pagination'
 import  data from '../utils/data'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
@@ -87,7 +88,7 @@ export default function Home(props) {
       </div>
       </div>
       </div>
-      
+      <Pagination/>
     </Layout>
   
    )
