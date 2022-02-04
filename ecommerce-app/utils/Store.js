@@ -7,9 +7,11 @@ const initalState = {
     cart:{
         cartItems: Cookies.get('cartItems') ? JSON.parse(Cookies.get('cartItems')): [],
         shippingAddress:  Cookies.get('shippingAddress') ? JSON.parse(Cookies.get('shippingAddress')): [],
-        paymentMethod:  Cookies.get('paymentMethod') ? Cookies.get('paymentMethod'): null
+        paymentMethod:  Cookies.get('paymentMethod') ? Cookies.get('paymentMethod'): null,
+        
     },
-    userInfo: Cookies.get('userInfo') ? JSON.parse(Cookies.get('userInfo')): null
+    userInfo: Cookies.get('userInfo') ? JSON.parse(Cookies.get('userInfo')): null,
+    image:  null,
 }
 
 function reducer(state, action){
@@ -53,6 +55,10 @@ function reducer(state, action){
 
         case 'CART_CLEAR':{
             return {...state, cart:{...state.cart, cartItems:[], shippingAddress:{}, paymentMethod:''}}
+        }
+
+        case 'PROFILE':{
+            return {...state, image: action.payload}
         }
             
         default:{

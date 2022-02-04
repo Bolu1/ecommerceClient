@@ -32,10 +32,11 @@ function Login() {
 
     e.preventDefault()
     try{
-    const {data} = await axios.post('/api/users/login', {email, password})
-    const value = JSON.stringify(data)
-    dispatch({type:'USER_LOGIN', payload:data})
+    const {data, image} = await axios.post('/api/users/login', {email, password})
+    const value = JSON.stringify(data.data)
+    dispatch({type:'USER_LOGIN', payload:data.data})
     Cookies.set('userInfo', value)
+    localStorage.setItem('myCat', data.image);
     setError("auth successful")
     router.push(redirect || '/')
     }catch(err){

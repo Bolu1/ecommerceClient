@@ -1,6 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
 import Head from "next/head";
-import { Fragment } from "react";
+import { Fragment,useEffect } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
@@ -120,9 +120,12 @@ export default function Layout({ title, children }) {
   const router = useRouter();
   const { dispatch, state } = useContext(Store);
   const { cart, userInfo } = state;
-  // console.log(Cookies.get('shippingAddress'))
+  const [profile, setProfile] = useState()
+  const [name, setName] = useState()
+  if(userInfo){
+    console.log(cart.image)
 
-  // handler to go to the cart page
+  }
   const goToCart = () => {
     router.push("/cart");
   };
@@ -130,10 +133,22 @@ export default function Layout({ title, children }) {
   // logout handler
   const logoutHandler = ()=>{
     dispatch({ type: "USER_LOGOUT"})
+    
     Cookies.remove('userInfo')
     Cookies.remove('cartItems')
     router.push('/')
   }
+
+  useEffect(() => {
+    setProfile(localStorage.getItem('myCat'))
+    if(userInfo){
+      var n = userInfo.name.split(" ")
+      setName(n[0])
+    }
+    
+    // console.log(name)
+  }, []);
+  
   return (
     <div>
       <Head>
@@ -239,10 +254,12 @@ export default function Layout({ title, children }) {
                         "ml-8 whitespace-nowrap cursor-pointer inline-flex items-center justify-center px-4 py-2   rounded-md  text-base font-bold "
                       )}
                     >
+                      
                       <div className="relative flex-shrink-0 px-2">
-                        <img src="https://source.unsplash.com/50x50/?portrait" alt="" className="w-12 h-12 border rounded-full dark:bg-coolGray-500 dark:border-coolGray-700"/>
+                        <img src={profile} alt="" className="w-12 h-12 border rounded-full dark:bg-coolGray-500 dark:border-coolGray-700"/>
                       </div>
-                      <span>{userInfo.name}</span>
+                     
+                      <span>{name}</span>
                     </Popover.Button>
 
                     <Transition

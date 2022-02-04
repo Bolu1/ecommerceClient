@@ -60,6 +60,7 @@ function OrderHistory() {
                     <th className="px-3 py-4 md:p-5">Action</th>
                   </tr>
                 </thead>
+                {order.length>0?(
                 <tbody className="divide-y divide-coolGray-700">
                   {order.map((order) => (
                     <>
@@ -112,6 +113,11 @@ function OrderHistory() {
                     </>
                   ))}
                 </tbody>
+                ):
+                // <h1  className='text-center self-center lg:ml-80 md:ml-60 sm:ml-20 my-20 text-4xl '>No Order Found</h1>
+                <div></div>
+              }
+        
               </table>
             </div>
           </div>

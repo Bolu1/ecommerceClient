@@ -10,7 +10,7 @@ import Cookies from 'js-cookie'
 import { Store } from '../utils/Store'
 
 
-function Login() {
+function Check() {
   const router = useRouter()
   const {redirect} = router.query
   const {dispatch, state} = useContext(Store)
@@ -18,13 +18,11 @@ function Login() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
-  const [cpassword, setCpassword] = useState('')
   const [error, setError] = useState('')
-
   //function that handles submit
 
   useEffect(() =>{
+    
     if(userInfo){
       router.push('/')
     }
@@ -33,32 +31,23 @@ function Login() {
   const submitHandler = async(e)=>{
 
     e.preventDefault()
-    if(password !== cpassword){
-        setError("Passwords don't match")
-       
-    }
     try{
-    const {data} = await axios.post('/api/users/register', {name, email, password})
+    const {data, image} = await axios.post('/api/users/login', {email, password})
     const value = JSON.stringify(data.data)
-    if(data == "This email is already in use"){
-      setError(data ? data : 'successful')
-      return
-    }
     dispatch({type:'USER_LOGIN', payload:data.data})
     Cookies.set('userInfo', value)
     localStorage.setItem('myCat', data.image);
-    router.push(redirect || '/')
-    setError('successful')
+    setError("auth successful")
+    router.push('/dashboard')
     }catch(err){
-      setError(err.response.data ? err.response.data.message : 'An error occured')
+      console.log(err)
+      setError("Invalid Login Parameters")
     }
   }
 
     return (
-        <Layout title="Register">
-            {/* //error alert */}
-            
-            { error !="" &&error != "successful" &&(
+        < div style={{minHeight:"100vh"}} className='bg-slate-800'>
+          { error == "Invalid Login Parameters" &&(
               
               <div className="w-full text-white bg-red-500">
               <div className="container flex items-center justify-between px-6 py-4 mx-auto">
@@ -67,7 +56,7 @@ function Login() {
                           <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z"></path>
                       </svg>
 
-                      <p className="mx-3">{error}</p>
+                      <p className="mx-3">Invalid Login Parameters</p>
                   </div>
 
                   <button onClick={() =>setError("")} className="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none">
@@ -81,7 +70,7 @@ function Login() {
 
           {/* sucess alert */}
 
-          { error == "successful" &&(
+          { error == "auth successful" &&(
               
                       <div className="w-full text-white bg-emerald-500">
                       <div className="container flex items-center justify-between px-6 py-4 mx-auto">
@@ -104,39 +93,13 @@ function Login() {
 
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
-          <div>
-
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create an account</h2>
-            {/* <p className="mt-2 text-center text-sm text-gray-600">
-              Or{' '}
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                start your 14-day free trial
-              </a>
-            </p> */}
-          </div>
-
+          
+          <br/>
           <form className="mt-8 space-y-6" onSubmit={submitHandler}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-                <label htmlFor="email-address" className="font-medium">
-                  Name 
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  className="appearance-none  relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Username"
-                  value={name}
-                  onChange={e=>setName(e.target.value)} 
-                  />
-              </div>
-              <br/>
               <div>
-                <label htmlFor="email-address" className="font-medium">
+                <label htmlFor="email-address" className="font-medium text-white">
                   Email 
                 </label>
                 <input
@@ -151,55 +114,30 @@ function Login() {
                   onChange={(e)=>{
                     setEmail(e.target.value)
                     setError('')}
-                  }  
+                  } 
                   />
               </div>
               <br/>
               <div>
-                <label htmlFor="password" className="font-medium">
+                <label htmlFor="password" className="font-medium text-white">
                   Password
                 </label>
                 <input
                   id="password"
                   name="password"
                   type="password"
-                  minlength="8"
                   autoComplete="current-password"
                   required
-                  value={password}
                   className="appearance-none  relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                   
                   onChange={(e)=>{
                     setPassword(e.target.value)
                     setError('')}
-                  } 
-                />
-              </div>
-              <br/>
-            {/* confirm password */}
-            <div>
-                <label htmlFor="password" className="font-medium">
-                  Confirm Password
-                </label>
-                <input
-                  id="cpassword"
-                  name="cpassword"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  value={cpassword}
-                  className="appearance-none  relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Confirm Password"
-                  
-                  onChange={(e)=>{
-                    setCpassword(e.target.value)
-                    setError('')}
-                  } 
+                  }
                 />
               </div>
             </div>
-
 
             <div>
               <button
@@ -209,17 +147,16 @@ function Login() {
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                   <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
                 </span>
-                Sign up
+                Sign in
               </button>
             </div>
           </form>
             <br/>
-            <p className=' text-center'>Already have an account?   <a href={ `/login?redirect=${redirect || '/'}`} className='text-indigo-600'>sign in</a></p>
-        </div>
+           </div>
       </div>
 
-        </Layout>
+        </div>
     )
 }
 
-export default Login
+export default Check

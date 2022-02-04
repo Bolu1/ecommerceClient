@@ -5,7 +5,7 @@ import { Store } from "../utils/Store";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Cookies from "js-cookie";
-import Link from "next/link";
+import FileBase from 'react-file-base64'
 
 function Profile() {
   const { state, dispatch } = useContext(Store);
@@ -14,10 +14,13 @@ function Profile() {
   const { userInfo } = state;
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [password, setPassword] = useState(null)
+  const [image, setImage] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState(null)
   
   const router = useRouter();
+
+  //function to get the type of error, i couldnt get it to work in  autils folder
   const getError = (err) => {
     err.response && err.response.data && err.response.data.message
       ? err.response.data.message
@@ -28,10 +31,11 @@ function Profile() {
     if (!userInfo) {
       router.push("/login");
     }
+    else{
 
       setName(userInfo.name)
       setEmail(userInfo.email)
-
+    }
   }, []);
 
   const submitHandler = async(e)=>{
@@ -42,18 +46,19 @@ function Profile() {
     }
     try{
       console.log(name)
-    const {data} = await axios.put('/api/users/profile', {name,email, password},{
+    const {data} = await axios.put('/api/users/profile', {name,email, password, image},{
       headers: {
         authorization: `Bearer ${userInfo.token}`,
       },
     })
-    const value = JSON.stringify(data)
-    dispatch({type:'USER_LOGIN', payload:data})
+    const value = JSON.stringify(data.data)
+    dispatch({type:'USER_LOGIN', payload:data.data})
     Cookies.set('userInfo', value)
+    localStorage.setItem('myCat', data.image);
     setError("successful")
     }catch(err){
       console.log(err)
-      setError(getError(err)?getError(err):"An error occured")
+      setError(getError(err)?getError(err):"Something went wrong, your file should not be more than 1mb")
     }
   }
 
@@ -129,6 +134,18 @@ function Profile() {
                         <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="passwordConfirmation" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"/>
                     </div>
                 </div>
+
+                <fieldset className="w-full space-y-1 pt-4 dark:text-coolGray-100">
+                  <label for="files" className="block text-sm font-medium">Upload Profile Photo</label>
+                  <div className="flex  px-8 py-12 border-2 border-dashed rounded-md dark:border-coolGray-700 dark:text-coolGray-400 dark:bg-coolGray-800">
+                    {/* <input type="file" name="files" id="files" className="px-8 py-12 border-2 border-dashed rounded-md dark:border-coolGray-700 dark:text-coolGray-400 dark:bg-coolGray-800"/> */}
+                    <FileBase
+                        type="file"
+                        multiple={false}
+                        onDone={({base64}) => setImage({base64})} 
+                    />
+                  </div>
+                </fieldset>
 
                 <div class="flex justify-end mt-6">
                     <button onClick={submitHandler} type="submit" class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700">Update</button>
