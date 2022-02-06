@@ -3,21 +3,16 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { StarIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import { RadioGroup } from "@headlessui/react";
-import Layout from "../../componets/Layout";
-import data from "../../utils/data";
-import db from "../../utils/db";
-import Product from "../../models/Product";
 import axios from "axios";
 import { useContext } from "react";
-import { Store } from "../../utils/Store";
+import { Store } from "../utils/Store";
 import FileBase from 'react-file-base64'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example(props) {
+export default function Example() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { userInfo } = state;
@@ -28,7 +23,7 @@ export default function Example(props) {
   const [colors, setColors] = useState([])
   const [sizes, setSize] = useState([])
   const [highlights, setHighlights] = useState([])
-  const [imageSrc, setImage] = useState("")
+  const [imagesrc, setImage] = useState("")
   const [countInStock, setCount] = useState()
   const [details, setDetails] = useState("")
   const [description, setDescription] = useState("")
@@ -42,8 +37,8 @@ export default function Example(props) {
   const submitHandler = async(e) => {
     e.preventDefault()
       try{
-        const id = props._id
-        const {data} = await axios.put('/api/products/update', {id, name,price, category, colors, sizes, highlights, imageSrc, countInStock, details, description},{
+          const imageSrc = imagesrc.base64
+        const {data} = await axios.post('/api/products/add', { name,price, category, colors, sizes, highlights, imageSrc, countInStock, details, description},{
         headers: {
           authorization: `Bearer ${userInfo.token}`,
         },
@@ -61,31 +56,9 @@ export default function Example(props) {
       if (!userInfo.isAdmin) {
         router.push("/");
       }
-    
-      if(props){
-        setName(props.name)
-        setPrice(props.price)
-        setCategory(props.category)
-        setColors(props.colors.map(c =>{
-          return c+", "
-        }))
-        setSize(props.sizes.map(c =>{
-          return c+", "
-        }))
-        setHighlights(props.highlights.map(c =>{
-          return c+", "
-        }))
-        setCount(props.countInStock)
-        setDetails(props.details)
-        setDescription(props.description)
-        setImage(props.imageSrc)
-      }
+
     }
   }, []);
-
-  if (!props) {
-    return <div>Not found</div>;
-  }
   return (
     <div>
 
@@ -348,7 +321,7 @@ export default function Example(props) {
                     <FileBase
                         type="file"
                         multiple={false}
-                        value={imageSrc}
+                        value={imagesrc}
                         onDone={({base64}) => setImage({base64})} 
                     />
                   </div>
@@ -366,16 +339,4 @@ export default function Example(props) {
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps(context) {
-  const { params } = context;
-  const { id } = params;
-
-  await db.connect();
-  const products = await Product.findOne({ _id: id }).lean();
-  await db.disconnect();
-  return {
-    props: JSON.parse(JSON.stringify(products)),
-  };
 }

@@ -7,12 +7,14 @@ const productSchema = new mongoose.Schema({
     highlights: { type: [String], required: true},
     details: { type: String, required: true},
     imageSrc: { type: String, required: true},
-    imageAlt: { type: String, required: true},
+    imageAlt: { type: String},
     price: { type: Number, required: true},
-    colors: { type: [Object], required: true},
-    reviews: { type: Object, required: true, },
+    colors: { type: [String], required: true},
+    reviews: { type: Object, },
     countInStock: { type: Number, required: true, default: 10},
-    sizes: { type: [Object], required: true},
+    sizes: { type: [String], required: true},
+    createdBy: { type: String},
+   
 },{
     timestamps: true
 })

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+// import React from "react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StarIcon } from "@heroicons/react/solid";
 import Link from 'next/link'
 import { RadioGroup } from "@headlessui/react";
@@ -20,70 +20,55 @@ function classNames(...classes) {
 
 
 export default function Example(props) {
-  const router = useRouter()
-  const { dispatch, state } = useContext(Store);
+  const router = useRouter( )
+  const {dispatch, state} = useContext(Store)
   const { cart, userInfo } = state;
   const [selectedColor, setSelectedColor] = useState(props.colors[0]);
   const [selectedSize, setSelectedSize] = useState(props.sizes[2]);
   const [sSize, setSsize] = useState([])
   const [quantity, setQuantity] = useState(1);
 
-  const addToCart = async() =>{
-
-    // console.log("ccscsc"+props._id)
-    const {data} = await axios.get(`/api/products/${props._id}`)
-    if(data.countInStock <=0){
-      // console.log("sorry")
-      window.alert('Sorry. Product is out of stock')
-      return
-    }
-    
-    const existItem = state.cart.cartItems.find(x=>x._id === props._id)
-    //array that holds sizes
-    const quantity = existItem? existItem.quantity + 1: 1
-    if(data.countInStock <quantity){
-      window.alert('Sorry, you have selected more than we have in stock')
-      return
-    }
-    
-    const order = {...props, selectedColor, selectedSize, quantity}
-    // console.log(order)
-    dispatch({type:'DARK_MODE', payload:{order, quantity: 1 }})
-    // router.push('/cart')
+  const deleteHandler = async(id) =>{
+    try{
+    const {data} = await axios.post('/api/products/delete', {id},{
+      headers: {
+        authorization: `Bearer ${userInfo.token}`,
+      },
+    })
+    router.push("/dashboard")
+  }catch(err){
+      console.log(err)
   }
 
-  const click = (id) =>{
-    router.push(`/editproduct/${id}`)
   }
-  
- // if user does not have this permission
- useEffect(() => {
-  if(userInfo){
+
+  const click = (e) =>{
+    e.preventDefault()
+    addToCart()
+  }
+
+  useEffect(() => {
+
     if(!userInfo.isAdmin){
       router.push('/')
     }
-  }
-
-}, []);
-  
+  },[])
 
   if (!props) {
     return <div>Not found</div>;
   }
   return (
-    <div >
       <div className="bg-white">
         <div className="pt-6">
           
 
           {/* Image gallery */}
           <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
-            
-            <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
+                      <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
               <img
                 src={props.imageSrc}
                 alt={props.imageAlt}
-                className="w-full h-full object-center object-cover"
+                className="w-96 h-96 object-center object-cover"
               />
             </div>
           </div>
@@ -145,11 +130,11 @@ export default function Example(props) {
                     <div className="flex propss-center space-x-3">
                       {props.colors.map((color) => (
                         <RadioGroup.Option
-                          key={color.name}
+                          key={color}
                           value={color}
                           className={({ active, checked }) =>
                             classNames(
-                              color.selectedClass,
+                              `ring-${color}-400`,
                               active && checked ? "ring ring-offset-1" : "",
                               !active && checked ? "ring-2" : "",
                               "-m-0.5 relative p-0.5 rounded-full flex propss-center justify-center cursor-pointer focus:outline-none"
@@ -157,12 +142,12 @@ export default function Example(props) {
                           }
                         >
                           <RadioGroup.Label as="p" className="sr-only">
-                            {color.name}
+                            {color}
                           </RadioGroup.Label>
                           <span
                             aria-hidden="true"
                             className={classNames(
-                              color.class,
+                              `bg-${color}-600`,
                               "h-8 w-8 border border-black border-opacity-10 rounded-full"
                             )}
                           />
@@ -176,12 +161,6 @@ export default function Example(props) {
                 <div className="mt-10">
                   <div className="flex propss-center justify-between">
                     <h3 className="text-sm text-gray-900 font-medium">Size</h3>
-                    <a
-                      href="#"
-                      className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Size guide
-                    </a>
                   </div>
 
                   <RadioGroup
@@ -195,14 +174,10 @@ export default function Example(props) {
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
                       {props.sizes.map((size) => (
                         <RadioGroup.Option
-                          key={size.name}
+                          key={size}
                           value={size}
-                          disabled={!size.inStock}
                           className={({ active }) =>
                             classNames(
-                              size.inStock
-                                ? "bg-white shadow-sm text-gray-900 cursor-pointer"
-                                : "bg-gray-50 text-gray-200 cursor-not-allowed",
                               active ? "ring-2 ring-indigo-500" : "",
                               "group relative border rounded-md py-3 px-4 flex propss-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
                             )
@@ -211,9 +186,8 @@ export default function Example(props) {
                           {({ active, checked }) => (
                             <>
                               <RadioGroup.Label as="p">
-                                {size.name}
+                                {size}
                               </RadioGroup.Label>
-                              {size.inStock ? (
                                 <div
                                   className={classNames(
                                     active ? "border" : "border-2",
@@ -224,27 +198,6 @@ export default function Example(props) {
                                   )}
                                   aria-hidden="true"
                                 />
-                              ) : (
-                                <div
-                                  aria-hidden="true"
-                                  className="absolute -inset-px rounded-md border-2 border-gray-200 pointer-events-none"
-                                >
-                                  <svg
-                                    className="absolute inset-0 w-full h-full text-gray-200 stroke-2"
-                                    viewBox="0 0 100 100"
-                                    preserveAspectRatio="none"
-                                    stroke="currentColor"
-                                  >
-                                    <line
-                                      x1={0}
-                                      y1={100}
-                                      x2={100}
-                                      y2={0}
-                                      vectorEffect="non-scaling-stroke"
-                                    />
-                                  </svg>
-                                </div>
-                              )}
                             </>
                           )}
                         </RadioGroup.Option>
@@ -255,12 +208,22 @@ export default function Example(props) {
 
                 
               </form>
+              
+              <Link href={`/editproduct/${props._id}`} >
               <a
                   // type="submit"
-                  className="mt-10 w-full bg-yellow-500 border border-transparent rounded-md py-3 px-8 flex propss-center justify-center text-base font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
-                 href={`/editproduct/${props._id}`}
+                  className="mt-10 w-full bg-indigo-500 border border-transparent rounded-md py-3 px-8 flex propss-center justify-center text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Edit
+                  Edit 
+                </a>
+                </Link>
+
+                <a
+                  // type="submit"
+                  onClick={()=>deleteHandler(props._id)}
+                  className="mt-5 w-full bg-red-500 border border-transparent rounded-md py-3 px-8 flex cursor-pointer propss-center justify-center text-base font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                  Delete 
                 </a>
             </div>
 
@@ -303,7 +266,6 @@ export default function Example(props) {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
@@ -312,7 +274,8 @@ export async function getServerSideProps(context){
   const {id} = params
 
   await db.connect()
-  const products = await Product.findOne({_id : id}).lean()
+  console.log("hehe "+id)
+  const products = await Product.findOne({id : id})
   await db.disconnect()
   return{
      props:JSON.parse(JSON.stringify(products)),

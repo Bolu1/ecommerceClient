@@ -252,7 +252,7 @@ export default function Search(props) {
               <img
                 src={product.imageSrc}
                 alt={product.imageAlt}
-                className="w-full h-full object-center object-cover group-hover:opacity-75"
+                className="w-80 h-80 object-center object-cover group-hover:opacity-75"
               />
             </div>
             <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>

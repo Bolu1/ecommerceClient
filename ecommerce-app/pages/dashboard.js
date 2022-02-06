@@ -17,7 +17,7 @@ import {useRouter} from 'next/router'
 
 
 
-export default function dashboard(props) {
+export default function Dashboard(props) {
 
     const router = useRouter()
     const { dispatch, state } = useContext(Store);
@@ -52,8 +52,13 @@ export default function dashboard(props) {
 
     const deleteHandler = async(id) =>{
       try{
-
-        const {data} = await axios.post(`/api/products/delete`, {id})
+        console.log("herer "+id)
+        const {data} = await axios.post(`/api/products/delete`, {id},{
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        })
+        router.push('/dashboard')
     }catch(err){
         console.log(err)
     }
@@ -106,41 +111,32 @@ export default function dashboard(props) {
                 <div class="flex flex-col justify-between flex-1 mt-6">
                     <nav>
 
-                    <a class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700" >
+                    <a href="/dashboard" class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700" >
                                     
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                                     </svg>
 
-                            <span class="mx-4 font-medium">products</span>
+                            <span class="mx-4 font-medium">Products</span>
                         </a>
                         
-                        <a class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700" >
+                        <a href="/adminorder" class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700" >
                                     
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg  xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
 
-                            <span class="mx-4 font-medium">Products</span>
+                            <span class="mx-4 font-medium">Orders</span>
                         </a>
 
                       
-                        <a class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700" >
+                        <a href="/adminuser" class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700" >
                                     
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
 
                             <span class="mx-4 font-medium">Users</span>
-                        </a>
-
-                        <a class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700" >
-                                    
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-
-                            <span class="mx-4 font-medium">Mail</span>
                         </a>
     
                     </nav>
@@ -155,9 +151,13 @@ export default function dashboard(props) {
         {products.length>0?(
 
               <div style={{minHeight:"100vh"}} className="container p-6 mx-auto :bg-coolGray-800 :text-coolGray-100">
-              <h2 className="mb-6 text-2xl font-semibold leading-tight">
-                products
-              </h2>
+              <Link href={`/addproduct`} className="py-5">
+                              <a
+                                className="px-5 py-2 font-semibold rounded bg-indigo-600 text-white"
+                              >
+                                Add
+                              </a>
+                            </Link>
               <div className="overflow-x-auto">
                 <table className="min-w-full">
                   <thead>
