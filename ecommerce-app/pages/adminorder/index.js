@@ -123,8 +123,8 @@ function AdminOrder() {
                     <th className="px-3 py-4 md:p-5">ID</th>
                     <th className="px-3 py-4 md:p-5">Date</th>
                     <th className="px-3 py-4 md:p-5">Total</th>
-                    <th className="px-3 py-4 md:p-5">Paid</th>
                     <th className="px-3 py-4 md:p-5">Delivered</th>
+                    <th className="px-3 py-4 md:p-5">Delivered at</th>
                     <th className="px-3 py-4 md:p-5">Action</th>
                   </tr>
                 </thead>
@@ -153,9 +153,11 @@ function AdminOrder() {
                         <td className="p-3 md:p-5">
                           {/* <span className="px-3 py-1 font-semibold rounded-full :bg-violet-400 :text-coolGray-900"> */}
                           <span>
-                            {order.isPaid
-                              ? `paid at ${order.paidAt}`
-                              : "not paid"}
+                          <span>
+                            {order.isDelivered
+                              ? `Delivered`
+                              : "Not devlivered"}
+                          </span>
                           </span>
                           {/* </span> */}
                         </td>

@@ -67,13 +67,13 @@ export default function Example(props) {
         setPrice(props.price)
         setCategory(props.category)
         setColors(props.colors.map(c =>{
-          return c+", "
+          return c
         }))
         setSize(props.sizes.map(c =>{
-          return c+", "
+          return c
         }))
         setHighlights(props.highlights.map(c =>{
-          return c+", "
+          return c
         }))
         setCount(props.countInStock)
         setDetails(props.details)

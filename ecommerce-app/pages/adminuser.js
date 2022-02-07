@@ -125,6 +125,7 @@ function AdminUser() {
                     <th className="px-3 py-4 md:p-5">Date Joined</th>
                     <th className="px-3 py-4 md:p-5">Name</th>
                     <th className="px-3 py-4 md:p-5">Email</th>
+                    <th className="px-3 py-4 md:p-5">Type</th>
                     <th className="px-3 py-4 md:p-5">Action</th>
                   </tr>
                 </thead>
@@ -147,12 +148,22 @@ function AdminUser() {
                         </td>
                         <td className="p-3 md:p-5">
                           <p className=":text-coolGray-400">
+                          
                             {order.name}
                           </p>
                         </td>
                         <td className="p-3 md:p-5">
                         <p className=":text-coolGray-400">
                             {order.email}
+                          </p>
+                        </td>
+                        <td className="p-3 md:p-5">
+                        <p className=":text-coolGray-400">
+                        <span>
+                            {order.isAdmin
+                              ? `Admin`
+                              : "Not Admin"}
+                          </span>
                           </p>
                         </td>
                         <td className="p-3 md:p-5">

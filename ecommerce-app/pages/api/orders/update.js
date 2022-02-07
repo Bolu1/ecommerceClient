@@ -7,17 +7,18 @@ import {config} from "../upload"
 
 
 const handler = nc();
-handler.use(isAuth)
+// handler.use(isAdmin)
 
 handler.put(async (req, res) => {
 
   await db.connect();
-  // console.log(req.body)
-  const order = await Orders.findById(req.body.id)
+  console.log(req.body)
+  const order = await Orders.findById(req.body.orderId)
   order.isDelivered = req.body.dev
   order.deliveredAt = Date.now()
   
   await order.save()
+  res.send("Updated")
   await db.disconnect();
 
 });

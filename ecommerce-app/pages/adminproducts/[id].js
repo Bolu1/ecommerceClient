@@ -7,7 +7,6 @@ import { RadioGroup } from "@headlessui/react";
 import Layout from "../../componets/Layout";
 import data from "../../utils/data";
 import db from '../../utils/db'
-import Product from '../../models/Product'
 import axios from 'axios'
 import {useContext} from 'react' 
 import {Store} from '../../utils/Store'
@@ -23,8 +22,9 @@ export default function Example(props) {
   const router = useRouter( )
   const {dispatch, state} = useContext(Store)
   const { cart, userInfo } = state;
-  const [selectedColor, setSelectedColor] = useState(props.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(props.sizes[2]);
+  const [selectedColor, setSelectedColor] = useState();
+  const [selectedSize, setSelectedSize] = useState();
+  const [data, setData] = useState()
   const [sSize, setSsize] = useState([])
   const [quantity, setQuantity] = useState(1);
 
@@ -52,9 +52,22 @@ export default function Example(props) {
     if(!userInfo.isAdmin){
       router.push('/')
     }
+    const fetchData = async()=>{
+      try{
+        console.log(props)
+        const {data} = await axios.get(`/api/products/${props.id}`)
+        setData(data)
+        console.log(data)
+        setSelectedColor(data.colors)
+        setSelectedSize(data.sizes)
+      }catch(err){
+        console.log(err) 
+      }
+    }
+    fetchData()
   },[])
 
-  if (!props) {
+  if (!data) {
     return <div>Not found</div>;
   }
   return (
@@ -66,8 +79,8 @@ export default function Example(props) {
           <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
                       <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
               <img
-                src={props.imageSrc}
-                alt={props.imageAlt}
+                src={data.imageSrc}
+                alt={data.imageAlt}
                 className="w-96 h-96 object-center object-cover"
               />
             </div>
@@ -77,25 +90,25 @@ export default function Example(props) {
           <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-                {props.name}
+                {data.name}
               </h1>
             </div>
 
             {/* Options */}
             <div className="mt-4 lg:mt-0 lg:row-span-3">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl text-gray-900">${props.price}</p>
+              <p className="text-3xl text-gray-900">${data.price}</p>
 
               {/* Reviews */}
               <div className="mt-6">
                 <h3 className="sr-only">Reviews</h3>
-                <div className="flex propss-center">
-                  <div className="flex propss-center">
+                <div className="flex datas-center">
+                  <div className="flex datas-center">
                     {[0, 1, 2, 3, 4].map((rating) => (
                       <StarIcon
                         key={rating}
                         className={classNames(
-                          props.reviews.average > rating
+                          data.reviews.average > rating
                             ? "text-gray-900"
                             : "text-gray-200",
                           "h-5 w-5 flex-shrink-0"
@@ -104,12 +117,12 @@ export default function Example(props) {
                       />
                     ))}
                   </div>
-                  <p className="sr-only">{props.reviews.average} out of 5 stars</p>
+                  <p className="sr-only">{data.reviews.average} out of 5 stars</p>
                   <a
-                    href={props.reviews.href}
+                    href={data.reviews.href}
                     className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
                   >
-                    {props.reviews.totalCount} reviews
+                    {data.reviews.totalCount} reviews
                   </a>
                 </div>
               </div>
@@ -127,8 +140,8 @@ export default function Example(props) {
                     <RadioGroup.Label className="sr-only">
                       Choose a color
                     </RadioGroup.Label>
-                    <div className="flex propss-center space-x-3">
-                      {props.colors.map((color) => (
+                    <div className="flex datas-center space-x-3">
+                      {data.colors.map((color) => (
                         <RadioGroup.Option
                           key={color}
                           value={color}
@@ -137,7 +150,7 @@ export default function Example(props) {
                               `ring-${color}-400`,
                               active && checked ? "ring ring-offset-1" : "",
                               !active && checked ? "ring-2" : "",
-                              "-m-0.5 relative p-0.5 rounded-full flex propss-center justify-center cursor-pointer focus:outline-none"
+                              "-m-0.5 relative p-0.5 rounded-full flex datas-center justify-center cursor-pointer focus:outline-none"
                             )
                           }
                         >
@@ -159,7 +172,7 @@ export default function Example(props) {
 
                 {/* Sizes */}
                 <div className="mt-10">
-                  <div className="flex propss-center justify-between">
+                  <div className="flex datas-center justify-between">
                     <h3 className="text-sm text-gray-900 font-medium">Size</h3>
                   </div>
 
@@ -172,14 +185,14 @@ export default function Example(props) {
                       Choose a size
                     </RadioGroup.Label>
                     <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                      {props.sizes.map((size) => (
+                      {data.sizes.map((size) => (
                         <RadioGroup.Option
                           key={size}
                           value={size}
                           className={({ active }) =>
                             classNames(
                               active ? "ring-2 ring-indigo-500" : "",
-                              "group relative border rounded-md py-3 px-4 flex propss-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
+                              "group relative border rounded-md py-3 px-4 flex datas-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
                             )
                           }
                         >
@@ -209,10 +222,10 @@ export default function Example(props) {
                 
               </form>
               
-              <Link href={`/editproduct/${props._id}`} >
+              <Link href={`/editproduct/${data._id}`} >
               <a
                   // type="submit"
-                  className="mt-10 w-full bg-indigo-500 border border-transparent rounded-md py-3 px-8 flex propss-center justify-center text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="mt-10 w-full bg-indigo-500 border border-transparent rounded-md py-3 px-8 flex datas-center justify-center text-base font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Edit 
                 </a>
@@ -220,8 +233,8 @@ export default function Example(props) {
 
                 <a
                   // type="submit"
-                  onClick={()=>deleteHandler(props._id)}
-                  className="mt-5 w-full bg-red-500 border border-transparent rounded-md py-3 px-8 flex cursor-pointer propss-center justify-center text-base font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  onClick={()=>deleteHandler(data._id)}
+                  className="mt-5 w-full bg-red-500 border border-transparent rounded-md py-3 px-8 flex cursor-pointer datas-center justify-center text-base font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   Delete 
                 </a>
@@ -234,7 +247,7 @@ export default function Example(props) {
 
                 <div className="space-y-6">
                   <p className="text-base text-gray-900">
-                    {props.description}
+                    {data.description}
                   </p>
                 </div>
               </div>
@@ -246,7 +259,7 @@ export default function Example(props) {
 
                 <div className="mt-4">
                   <ul role="list" className="pl-4 list-disc text-sm space-y-2">
-                    {props.highlights.map((highlight) => (
+                    {data.highlights.map((highlight) => (
                       <li key={highlight} className="text-gray-400">
                         <span className="text-gray-600">{highlight}</span>
                       </li>
@@ -259,7 +272,7 @@ export default function Example(props) {
                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
                 <div className="mt-4 space-y-6">
-                  <p className="text-sm text-gray-600">{props.details}</p>
+                  <p className="text-sm text-gray-600">{data.details}</p>
                 </div>
               </div>
             </div>
@@ -273,12 +286,11 @@ export async function getServerSideProps(context){
   const {params} = context
   const {id} = params
 
-  await db.connect()
-  console.log("hehe "+id)
-  const products = await Product.findOne({id : id})
-  await db.disconnect()
+  const val = {
+    id: params.id
+  }
   return{
-     props:JSON.parse(JSON.stringify(products)),
+     props:params,
 
   }
 }

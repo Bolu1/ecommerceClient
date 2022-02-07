@@ -33,9 +33,20 @@ function Order({params}) {
     // const [{ order}, dispatch] = useReducer(reducer, {order:{}})
     const {shippingAddress, paymentMethod, orderItems, itemsPrice, taxPrice, shippingPrice, totalPrice, isPaid, paidAt, isDelivered, deliveredAt} = order
 
-    const suubmitHandler = (e) =>{
+    const suubmitHandler = async(e) =>{
       e.preventDefault()
-      
+      try{
+      const {data} = await axios.put('/api/orders/update', {orderId, dev},{
+        headers: {
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      })
+      const value = JSON.stringify(data.data)
+      setError("successful")
+      }catch(err){
+        console.log(err)
+        setError(getError(err)?getError(err):"Something went wrong")
+      }
       console.log(dev)
     }
 
@@ -78,7 +89,7 @@ function Order({params}) {
         {shippingAddress ?(
         <>
 
-            { error != "" &&(
+            { error != "" && error != "successful" &&(
                   
                   <div className="w-full fixed text-white bg-red-500">
                   <div className="container flex items-center justify-between px-6 py-4 mx-auto">
@@ -108,7 +119,7 @@ function Order({params}) {
                                             <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z"></path>
                                         </svg>
 
-                                        <p className="mx-3">Authentication Successful</p>
+                                        <p className="mx-3">Update Successful</p>
                                     </div>
 
                                     <button onClick={() =>setError("")} className="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none">

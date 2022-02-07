@@ -93,7 +93,7 @@ export default function Dashboard(props) {
             
             <div className='flex'>
             
-            <div class="flex flex-col w-64 h-screen  px-8 py-8 bg-slate-800 bproduct-r :bg-gray-800 :bproduct-gray-600">
+            <div style={{borderRight:"0.2px solid #e6e6e6"}} class="flex flex-col w-64 h-screen  px-8 py-8  product-r :bg-gray-800 :bproduct-gray-600">
                 <h2 class="text-3xl font-semibold text-center text-white">Products</h2>
 
                 <div class="relative mt-6">
@@ -208,7 +208,7 @@ export default function Dashboard(props) {
                           </td>
                           <td className="p-3 md:p-5">
                               <a onClick={()=>deleteHandler(product._id)}
-                                className=" py-2 font-semibold cursor-pointer rounded text-red-600"
+                                className=" py-2 font-semibold cursor-pointer rounded text-red-500"
                               >
                                 Delete
                               </a>

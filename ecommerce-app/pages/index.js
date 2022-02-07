@@ -13,6 +13,7 @@ import { useContext } from "react";
 import { Store } from "../utils/Store";
 import Product from '../models/Product'
 
+
 export default function Home(props) {
   const {products} = props
   const { dispatch, state } = useContext(Store);

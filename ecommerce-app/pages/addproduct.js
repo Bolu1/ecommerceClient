@@ -71,7 +71,7 @@ export default function Example() {
                                     <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z"></path>
                                 </svg>
 
-                                <p className="mx-3">Update Successful</p>
+                                <p className="mx-3">Created Successfully</p>
                             </div>
 
                             <button onClick={() =>setError("")} className="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none">
@@ -198,7 +198,7 @@ export default function Example() {
                 <input
                   required
                   id="textConfirmation"
-                  type="text"
+                  type="number"
                   value={countInStock}
                   onChange={(e)=>setCount(e.target.value)}
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"
