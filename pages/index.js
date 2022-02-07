@@ -22,7 +22,6 @@ export default function Home(props) {
   // console.log(props.props)
   // const products = [1,2,3]
   return (
-
     <Layout>
           
          {/* //hero section */}
