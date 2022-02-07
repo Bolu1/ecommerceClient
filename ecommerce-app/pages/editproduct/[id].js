@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { StarIcon } from "@heroicons/react/solid";
-import Link from "next/link";
-import { RadioGroup } from "@headlessui/react";
-import Layout from "../../componets/Layout";
-import data from "../../utils/data";
 import db from "../../utils/db";
 import Product from "../../models/Product";
 import axios from "axios";

@@ -1,12 +1,8 @@
 import React, { useContext, useEffect, useReducer } from 'react'
 import { Store } from '../../utils/Store'
-import Layout from "../../componets/layout"
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
-import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
 import { usePayPalScriptReducer, PayPalButtons } from '@paypal/react-paypal-js'
 import axios from 'axios'
 import Cookies from 'js-cookie'

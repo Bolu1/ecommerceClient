@@ -3,11 +3,6 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { StarIcon } from "@heroicons/react/solid";
 import Link from 'next/link'
-import { RadioGroup } from "@headlessui/react";
-import Layout from "../../componets/Layout";
-import data from "../../utils/data";
-import db from '../../utils/db'
-import axios from 'axios'
 import {useContext} from 'react' 
 import {Store} from '../../utils/Store'
 
