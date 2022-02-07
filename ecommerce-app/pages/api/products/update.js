@@ -1,6 +1,6 @@
 import nc from "next-connect";
 import db from "../../../utils/db";
-import Products from "../../../models/product";
+import Products from "../../../models/Product";
 import bcrypt from "bcryptjs";
 import { signToken } from "../../../utils/auth";
 import { isAdmin } from "../../../utils/auth";

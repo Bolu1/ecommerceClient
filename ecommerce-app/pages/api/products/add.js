@@ -1,6 +1,6 @@
 import nc from 'next-connect'
 import db from '../../../utils/db'
-import Product from "../../../models/product"
+import Product from "../../../models/Product"
 import onError from '../../../utils/error'
 import {isAdmin} from '../../../utils/auth'
 
