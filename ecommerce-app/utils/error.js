@@ -4,9 +4,9 @@
 //     : err.message
 // }
 
-const onError = async(err, req, res, next) =>{
-    await db.disconnect()
-    res.status(500).send({message: err.toString()})
-}
+const onError = async (err, req, res, next) => {
+  await db.disconnect();
+  res.status(500).send({ message: err.toString() });
+};
 
-export {onError}
+export default onError;
