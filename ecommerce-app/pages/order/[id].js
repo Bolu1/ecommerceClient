@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer } from 'react'
 import { Store } from '../../utils/Store'
-import Layout from "../../componets/layout"
+import Layout from "../../componets/Layout"
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
