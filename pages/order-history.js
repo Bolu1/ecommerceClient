@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import dynamic from "next/dynamic";
-import Layout from "../componets/Layout";
+import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -44,7 +44,10 @@ function OrderHistory() {
     <>
       {order && (
         <Layout title="Orders History">
-          <div style={{minHeight:"100vh"}} className="container p-6 mx-auto :bg-coolGray-800 :text-coolGray-100">
+          <div
+            style={{ minHeight: "100vh" }}
+            className="container p-6 mx-auto :bg-coolGray-800 :text-coolGray-100"
+          >
             <h2 className="mb-6 text-2xl font-semibold leading-tight">
               Orders
             </h2>
@@ -60,68 +63,64 @@ function OrderHistory() {
                     <th className="px-3 py-4 md:p-5">Action</th>
                   </tr>
                 </thead>
-                {order.length>0?(
-                <tbody className="divide-y divide-coolGray-700">
-                  {order.map((order) => (
-                    <>
-                      <tr className="space-x-5 text-sm">
-                        <td className="p-3 md:p-5">
-                          <div className="flex space-x-3">
-                            <div>
-                              <p>{order._id.substring(20, 24)}</p>
+                {order.length > 0 ? (
+                  <tbody className="divide-y divide-coolGray-700">
+                    {order.map((order) => (
+                      <>
+                        <tr className="space-x-5 text-sm">
+                          <td className="p-3 md:p-5">
+                            <div className="flex space-x-3">
+                              <div>
+                                <p>{order._id.substring(20, 24)}</p>
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                        <td className="p-3 md:p-5">
-                          <p className=":text-coolGray-400">
-                            {order.createdAt}
-                          </p>
-                        </td>
-                        <td className="p-3 md:p-5">
-                          <p className=":text-coolGray-400">
-                            ${order.totalPrice}
-                          </p>
-                        </td>
-                        <td className="p-3 md:p-5">
-                          {/* <span className="px-3 py-1 font-semibold rounded-full :bg-violet-400 :text-coolGray-900"> */}
-                          <span>
-                            {order.isPaid
-                              ? `paid at ${order.paidAt}`
-                              : "not paid"}
-                          </span>
-                          {/* </span> */}
-                        </td>
-                        <td className="p-3 md:p-5">
-                          {/* <span className="px-3 py-1 font-semibold rounded-full :bg-violet-400 :text-coolGray-900"> */}
-                          <span>
-                            {order.isDelivered
-                              ? `delivered at ${order.deliveredAt}`
-                              : "not devlivered"}
-                          </span>
-                          {/* </span> */}
-                        </td>
-                        <td className="p-3 md:p-5">
-                          <Link href={`/order/${order._id}`}>
-                            <a
-                              className="px-8 py-3 font-semibold rounded bg-indigo-600 text-white"
-                            >
-                              Details
-                            </a>
-                          </Link>
-                        </td>
-                      </tr>
-                    </>
-                  ))}
-                </tbody>
-                ):
-                // <h1  className='text-center self-center lg:ml-80 md:ml-60 sm:ml-20 my-20 text-4xl '>No Order Found</h1>
-                <div></div>
-              }
-        
+                          </td>
+                          <td className="p-3 md:p-5">
+                            <p className=":text-coolGray-400">
+                              {order.createdAt}
+                            </p>
+                          </td>
+                          <td className="p-3 md:p-5">
+                            <p className=":text-coolGray-400">
+                              ${order.totalPrice}
+                            </p>
+                          </td>
+                          <td className="p-3 md:p-5">
+                            {/* <span className="px-3 py-1 font-semibold rounded-full :bg-violet-400 :text-coolGray-900"> */}
+                            <span>
+                              {order.isPaid
+                                ? `paid at ${order.paidAt}`
+                                : "not paid"}
+                            </span>
+                            {/* </span> */}
+                          </td>
+                          <td className="p-3 md:p-5">
+                            {/* <span className="px-3 py-1 font-semibold rounded-full :bg-violet-400 :text-coolGray-900"> */}
+                            <span>
+                              {order.isDelivered
+                                ? `delivered at ${order.deliveredAt}`
+                                : "not devlivered"}
+                            </span>
+                            {/* </span> */}
+                          </td>
+                          <td className="p-3 md:p-5">
+                            <Link href={`/order/${order._id}`}>
+                              <a className="px-8 py-3 font-semibold rounded bg-indigo-600 text-white">
+                                Details
+                              </a>
+                            </Link>
+                          </td>
+                        </tr>
+                      </>
+                    ))}
+                  </tbody>
+                ) : (
+                  // <h1  className='text-center self-center lg:ml-80 md:ml-60 sm:ml-20 my-20 text-4xl '>No Order Found</h1>
+                  <div></div>
+                )}
               </table>
             </div>
           </div>
-          
         </Layout>
       )}
     </>

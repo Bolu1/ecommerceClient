@@ -2,97 +2,88 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { StarIcon } from "@heroicons/react/solid";
-import Link from 'next/link'
+import Link from "next/link";
 import { RadioGroup } from "@headlessui/react";
-import Layout from "../../componets/Layout";
+import Layout from "../../components/Layout";
 import data from "../../utils/data";
-import db from '../../utils/db'
-import axios from 'axios'
-import {useContext} from 'react' 
-import {Store} from '../../utils/Store'
-
+import db from "../../utils/db";
+import axios from "axios";
+import { useContext } from "react";
+import { Store } from "../../utils/Store";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-
-
 export default function Example(props) {
-  const [data, setData] = useState()
-  const router = useRouter( )
-  const {dispatch, state} = useContext(Store)
+  const [data, setData] = useState();
+  const router = useRouter();
+  const { dispatch, state } = useContext(Store);
   const [selectedColor, setSelectedColor] = useState();
   const [selectedSize, setSelectedSize] = useState();
-  const [sSize, setSsize] = useState([])
+  const [sSize, setSsize] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
-  const addToCart = async() =>{
-    console.log("chehehe "+data._id)
-    const {data} = await axios.get(`/api/products/${data._id}`)
-    if(data.countInStock <=0){
-      window.alert('Sorry. Product is out of stock')
-      return
+  const addToCart = async () => {
+    console.log("chehehe " + data._id);
+    const { data } = await axios.get(`/api/products/${data._id}`);
+    if (data.countInStock <= 0) {
+      window.alert("Sorry. Product is out of stock");
+      return;
     }
-    
-    const existItem = state.cart.cartItems.find(x=>x._id === data._id)
+
+    const existItem = state.cart.cartItems.find((x) => x._id === data._id);
     //array that holds sizes
-    const quantity = existItem? existItem.quantity + 1: 1
-    if(data.countInStock <quantity){
-      window.alert('Sorry, you have selected more than we have in stock')
-      return
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    if (data.countInStock < quantity) {
+      window.alert("Sorry, you have selected more than we have in stock");
+      return;
     }
-    
-    const order = {...data, selectedColor, selectedSize, quantity}
+
+    const order = { ...data, selectedColor, selectedSize, quantity };
     // console.log(order)
-    dispatch({type:'DARK_MODE', payload:{order, quantity: 1 }})
+    dispatch({ type: "DARK_MODE", payload: { order, quantity: 1 } });
     // router.push('/cart')
-  }
+  };
 
-  
-
-  const click = (e) =>{
-    e.preventDefault()
-    addToCart()
-  }
+  const click = (e) => {
+    e.preventDefault();
+    addToCart();
+  };
 
   useEffect(() => {
-    const fetchData = async()=>{
-      try{
-        console.log(props)
-        const {data} = await axios.get(`/api/products/${props.id}`)
-        setData(data)
-        setSelectedColor(data.colors[0])
-        setSelectedSize(data.sizes[2])
-        console.log("heete" ,data)
-      }catch(err){
-        console.log(err) 
+    const fetchData = async () => {
+      try {
+        console.log(props);
+        const { data } = await axios.get(`/api/products/${props.id}`);
+        setData(data);
+        setSelectedColor(data.colors[0]);
+        setSelectedSize(data.sizes[2]);
+        console.log("heete", data);
+      } catch (err) {
+        console.log(err);
       }
-    }
-    fetchData()
+    };
+    fetchData();
   }, []);
 
-
   // console.log(data)
-
 
   // const data = data.find((a) => a.id == id);
   if (!data) {
     return <div>Not found</div>;
   }
-    // return
-    // comp 
-    // slap 
+  // return
+  // comp
+  // slap
 
   return (
     <Layout title={data.name}>
       <div className="bg-white">
         <div className="pt-6">
-          
-
           {/* Image gallery */}
           <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
-                      <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
+            <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
               <img
                 src={data.imageSrc}
                 alt={data.imageAlt}
@@ -142,7 +133,7 @@ export default function Example(props) {
                 </div>
               </div> */}
 
-              <form className="mt-10" >
+              <form className="mt-10">
                 {/* Colors */}
                 <div>
                   <h3 className="text-sm text-gray-900 font-medium">Color</h3>
@@ -213,19 +204,17 @@ export default function Example(props) {
                         >
                           {({ active, checked }) => (
                             <>
-                              <RadioGroup.Label as="p">
-                                {size}
-                              </RadioGroup.Label>
-                                <div
-                                  className={classNames(
-                                    active ? "border" : "border-2",
-                                    checked
-                                      ? "border-indigo-500"
-                                      : "border-transparent",
-                                    "absolute -inset-px rounded-md pointer-events-none"
-                                  )}
-                                  aria-hidden="true"
-                                />
+                              <RadioGroup.Label as="p">{size}</RadioGroup.Label>
+                              <div
+                                className={classNames(
+                                  active ? "border" : "border-2",
+                                  checked
+                                    ? "border-indigo-500"
+                                    : "border-transparent",
+                                  "absolute -inset-px rounded-md pointer-events-none"
+                                )}
+                                aria-hidden="true"
+                              />
                             </>
                           )}
                         </RadioGroup.Option>
@@ -233,16 +222,14 @@ export default function Example(props) {
                     </div>
                   </RadioGroup>
                 </div>
-
-                
               </form>
               <button
-                  // type="submit"
-                  className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex datas-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  onClick={click}
-                >
-                  Add to bag
-                </button>
+                // type="submit"
+                className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex datas-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={click}
+              >
+                Add to bag
+              </button>
             </div>
 
             <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
@@ -251,9 +238,7 @@ export default function Example(props) {
                 <h3 className="sr-only">Description</h3>
 
                 <div className="space-y-6">
-                  <p className="text-base text-gray-900">
-                    {data.description}
-                  </p>
+                  <p className="text-base text-gray-900">{data.description}</p>
                 </div>
               </div>
 
@@ -288,15 +273,14 @@ export default function Example(props) {
   );
 }
 
-export async function getServerSideProps(context){
-  const {params} = context
-  const {id} = params
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { id } = params;
 
   const val = {
-    id: params.id
-  }
-  return{
-     props:params,
-
-  }
+    id: params.id,
+  };
+  return {
+    props: params,
+  };
 }
