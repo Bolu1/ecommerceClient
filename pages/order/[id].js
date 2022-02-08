@@ -299,7 +299,7 @@ function Order({ params }) {
                       {/* if this line does not show number of items chang it to just total price */}
                       <p>
                         Total (
-                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
+                        {orderItems.reduce((a, c) => a + c.quantity, 0)}{" "}
                         item(s))
                       </p>
                       <p>${totalPrice}</p>

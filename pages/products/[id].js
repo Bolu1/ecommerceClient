@@ -24,15 +24,32 @@ export default function Example(props) {
   const [sSize, setSsize] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
+ 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(`/api/products/${props.id}`);
+        setData(data);
+        setSelectedColor(data.colors[0]);
+        setSelectedSize(data.sizes[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
+
+
   const addToCart = async () => {
-    console.log("chehehe " + data._id);
-    const { data } = await axios.get(`/api/products/${data._id}`);
+    // console.log( data);
+    const { data } = await axios.get(`/api/products/${props.id}`);
     if (data.countInStock <= 0) {
       window.alert("Sorry. Product is out of stock");
       return;
     }
 
-    const existItem = state.cart.cartItems.find((x) => x._id === data._id);
+    const existItem = state.cart.cartItems.find((x) => x._id === props.id);
     //array that holds sizes
     const quantity = existItem ? existItem.quantity + 1 : 1;
     if (data.countInStock < quantity) {
@@ -41,9 +58,7 @@ export default function Example(props) {
     }
 
     const order = { ...data, selectedColor, selectedSize, quantity };
-    // console.log(order)
     dispatch({ type: "DARK_MODE", payload: { order, quantity: 1 } });
-    // router.push('/cart')
   };
 
   const click = (e) => {
@@ -51,38 +66,21 @@ export default function Example(props) {
     addToCart();
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log(props);
-        const { data } = await axios.get(`/api/products/${props.id}`);
-        setData(data);
-        setSelectedColor(data.colors[0]);
-        setSelectedSize(data.sizes[2]);
-        console.log("heete", data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, []);
+  const setColor = (c) =>{
+    setSelectedColor(c)
+    console.log("here ",c)
+  }
 
-  // console.log(data)
-
-  // const data = data.find((a) => a.id == id);
   if (!data) {
     return <div>Not found</div>;
   }
-  // return
-  // comp
-  // slap
 
   return (
     <Layout title={data.name}>
       <div className="bg-white">
         <div className="pt-6">
           {/* Image gallery */}
-          <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
+          <div className="mt-6 max-w-2xl mx-auto px-14 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
             <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
               <img
                 src={data.imageSrc}
@@ -105,38 +103,11 @@ export default function Example(props) {
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl text-gray-900">${data.price}</p>
 
-              {/* Reviews
-              <div className="mt-6">
-                <h3 className="sr-only">Reviews</h3>
-                <div className="flex datas-center">
-                  <div className="flex datas-center">
-                    {[0, 1, 2, 3, 4].map((rating) => (
-                      <StarIcon
-                        key={rating}
-                        className={classNames(
-                          data.reviews.average > rating
-                            ? "text-gray-900"
-                            : "text-gray-200",
-                          "h-5 w-5 flex-shrink-0"
-                        )}
-                        aria-hidden="true"
-                      />
-                    ))}
-                  </div>
-                  <p className="sr-only">{data.reviews.average} out of 5 stars</p>
-                  <a
-                    href={data.reviews.href}
-                    className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    {data.reviews.totalCount} reviews
-                  </a>
-                </div>
-              </div> */}
 
               <form className="mt-10">
                 {/* Colors */}
                 <div>
-                  <h3 className="text-sm text-gray-900 font-medium">Color</h3>
+                  <h3 className="text-sm text-gray-900 font-medium">Colors</h3>
 
                   <RadioGroup
                     value={selectedColor}
@@ -164,9 +135,11 @@ export default function Example(props) {
                             {color}
                           </RadioGroup.Label>
                           <span
+                          onClick={()=>setColor(color)}
+                          style={{background:`${color}`, opacity:"0.7"}}
                             aria-hidden="true"
                             className={classNames(
-                              `bg-${color}-600`,
+                              `bg-${color}-500`,
                               "h-8 w-8 border border-black border-opacity-10 rounded-full"
                             )}
                           />
@@ -179,7 +152,7 @@ export default function Example(props) {
                 {/* Sizes */}
                 <div className="mt-10">
                   <div className="flex datas-center justify-between">
-                    <h3 className="text-sm text-gray-900 font-medium">Size</h3>
+                    <h3 className="text-sm text-gray-900 font-medium">Sizes</h3>
                   </div>
 
                   <RadioGroup
@@ -206,6 +179,7 @@ export default function Example(props) {
                             <>
                               <RadioGroup.Label as="p">{size}</RadioGroup.Label>
                               <div
+                                onClick={()=>setSelectedSize(color)}
                                 className={classNames(
                                   active ? "border" : "border-2",
                                   checked

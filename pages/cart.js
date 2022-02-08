@@ -9,33 +9,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import axios from "axios";
 
-const products = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: "$90.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: "$32.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-  // More products...
-];
 
 function CartScreen() {
   const router = useRouter();
@@ -164,10 +137,10 @@ function CartScreen() {
                                         <p className="ml-4">${product.price}</p>
                                       </div>
                                       <p className="mt-1 text-sm text-gray-500">
-                                        Color: {product.selectedColor.name}
+                                        Color: {product.selectedColor}
                                       </p>
                                       <p className="mt-1 text-sm text-gray-500">
-                                        Size: {product.selectedSize.name}
+                                        Size: {product.selectedSize}
                                       </p>
                                     </div>
                                     <div className="flex-1 flex items-end justify-between text-sm">

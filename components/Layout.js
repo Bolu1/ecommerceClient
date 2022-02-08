@@ -122,10 +122,8 @@ export default function Layout({ title, children }) {
   const { cart, userInfo } = state;
   const [profile, setProfile] = useState()
   const [name, setName] = useState()
-  if(userInfo){
-    console.log(cart.image)
 
-  }
+  //go to cart
   const goToCart = () => {
     router.push("/cart");
   };
@@ -178,17 +176,17 @@ export default function Layout({ title, children }) {
             <Popover.Group as="nav" className="hidden md:flex space-x-10">
               
             <a
+                href="/"
+                className="text-base font-medium text-gray-500 hover:text-gray-900"
+              >
+                Home
+              </a>
+
+              <a
                 href="/search"
                 className="text-base font-medium text-gray-500 hover:text-gray-900"
               >
                 Search
-              </a>
-
-              <a
-                href="#"
-                className="text-base font-medium text-gray-500 hover:text-gray-900"
-              >
-                Categories
               </a>
 
               <a
@@ -404,7 +402,7 @@ export default function Layout({ title, children }) {
                         <h1 className="font-medium py-3 px-4 cursor-pointer">Profile</h1>
                       </Link>
 
-                      <Link href="/orders" >
+                      <Link href="/order-history" >
                         <h1 className="font-medium py-3 px-4 cursor-pointer">Orders</h1>
                       </Link>
 

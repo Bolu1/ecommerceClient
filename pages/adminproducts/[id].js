@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { StarIcon } from "@heroicons/react/solid";
 import Link from 'next/link'
 import {useContext} from 'react' 
+import axios from 'axios'
+import { RadioGroup } from "@headlessui/react";
 import {Store} from '../../utils/Store'
 
 
@@ -70,9 +72,9 @@ export default function Example(props) {
         <div className="pt-6">
           
 
-          {/* Image gallery */}
-          <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
-                      <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
+          {/* Image gallery */}          
+          <div className="mt-6 max-w-2xl mx-auto px-14 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
+                         <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
               <img
                 src={data.imageSrc}
                 alt={data.imageAlt}
@@ -125,7 +127,7 @@ export default function Example(props) {
               <form className="mt-10" >
                 {/* Colors */}
                 <div>
-                  <h3 className="text-sm text-gray-900 font-medium">Color</h3>
+                  <h3 className="text-sm text-gray-900 font-medium">Colors</h3>
 
                   <RadioGroup
                     value={selectedColor}
@@ -153,6 +155,7 @@ export default function Example(props) {
                             {color}
                           </RadioGroup.Label>
                           <span
+                            style={{background:`${color}`, opacity:"0.7"}}
                             aria-hidden="true"
                             className={classNames(
                               `bg-${color}-600`,
@@ -168,7 +171,7 @@ export default function Example(props) {
                 {/* Sizes */}
                 <div className="mt-10">
                   <div className="flex datas-center justify-between">
-                    <h3 className="text-sm text-gray-900 font-medium">Size</h3>
+                    <h3 className="text-sm text-gray-900 font-medium">Sizes</h3>
                   </div>
 
                   <RadioGroup

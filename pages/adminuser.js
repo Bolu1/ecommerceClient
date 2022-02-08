@@ -60,8 +60,8 @@ function AdminUser() {
 
   return (
     <>
-      <div className="flex">
-        <div class="flex flex-col w-64 h-screen  px-8 py-8 bg-slate-800 bproduct-r :bg-gray-800 :bproduct-gray-600">
+      <div className="lg:flex">
+        <div class="flex flex-col lg:w-64 lg:h-screen  px-8 py-8 bg-slate-800 bproduct-r :bg-gray-800 :bproduct-gray-600">
           <h2 class="text-3xl font-semibold text-center text-white">Users</h2>
 
           <div class="relative mt-6">
@@ -112,7 +112,7 @@ function AdminUser() {
                   />
                 </svg>
 
-                <span class="mx-4 font-medium">Products</span>
+                {/* <span class="mx-4 font-medium">Products</span> */}
               </a>
 
               <a

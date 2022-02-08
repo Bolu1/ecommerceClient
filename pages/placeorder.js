@@ -216,10 +216,10 @@ function PlaceOrder() {
                                   <p className="ml-4">${product.price}</p>
                                 </div>
                                 <p className="mt-1 text-sm text-gray-500">
-                                  Color: {product.selectedColor.name}
+                                  Color: {product.selectedColor}
                                 </p>
                                 <p className="mt-1 text-sm text-gray-500">
-                                  Size: {product.selectedSize.name}
+                                  Size: {product.selectedSize}
                                 </p>
                               </div>
                               <div className="flex-1 flex items-end justify-between text-sm">

@@ -85,10 +85,10 @@ export default function Dashboard(props) {
 
   return (
     <div>
-      <div className="flex">
+      <div className="lg:flex">
         <div
-          style={{ borderRight: "0.2px solid #e6e6e6" }}
-          class="flex flex-col w-64 h-screen  px-8 py-8  product-r :bg-gray-800 :bproduct-gray-600"
+          // style={{ borderRight: "0.2px solid #e6e6e6" }}
+          class="flex flex-col  lg:w-64 h-screen lg:h-half bg-slate-800 px-8 py-8  product-r :bg-gray-800 :bproduct-gray-600"
         >
           <h2 class="text-3xl font-semibold text-center text-white">
             Products
