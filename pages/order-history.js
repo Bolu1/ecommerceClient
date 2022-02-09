@@ -40,6 +40,17 @@ function OrderHistory() {
     fetchOrder();
   }, []);
 
+  if (!order) {
+    return <div>
+       <section className="flex items-center h-full sm:p-16 dark:bg-coolGray-900 dark:text-coolGray-100">
+            <div style={{marginTop:"25vh"}} className="container flex flex-col items-center justify-center px-5 mx-auto  space-y-8 text-center sm:max-w-md">
+                
+                <p className="text-3xl">Sorry this order could not be found</p>
+            </div>
+        </section>
+    </div>;
+  }
+
   return (
     <>
       {order && (

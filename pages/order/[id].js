@@ -12,17 +12,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { initializePayment, verifyPayment } from "../../utils/paystack";
 
-// const reducer = (state, action) =>{
-//     switch(action.type){
-//         case 'FETCH_REQUEST':
-//             return {...state, order: {}, error:''}
-
-//         case 'FETCH_SUCCESS':
-//             return {...state, order: action.payload}
-//         case 'FETCH_FAIL':
-//             return {...state, error: action.payload}
-//     }
-// }
 
 function Order({ params }) {
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
@@ -55,6 +44,33 @@ function Order({ params }) {
     isDelivered,
     deliveredAt,
   } = order;
+
+  const payHandler = async (e) => {
+    e.preventDefault();
+    // Create a Checkout Session.
+    const checkoutSession = await fetchPostJSON(
+      '/api/checkout_sessions',
+      { amount: totalPrice },
+    );
+  
+    if ((checkoutSession).statusCode === 500) {
+      console.error((checkoutSession).message);
+      return;
+    }
+  
+    // Redirect to Checkout.
+    const stripe = await getStripe();
+    const { error } = await stripe({
+      // Make the id field from the Checkout Session creation API response
+      // available to this file, so you can provide it as parameter here
+      // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+      sessionId: checkoutSession.id,
+    });
+    // If `redirectToCheckout` fails due to a browser or network
+    // error, display the localized error message to your customer
+    // using `error.message`.
+    console.warn(error.message);
+  };
 
   useEffect(() => {
     var val;
@@ -309,9 +325,9 @@ function Order({ params }) {
                         <div className="mt-6">
                           <a
                             className="flex justify-center cursor-pointer items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                            //  onClick={payStackPay}
+                             onClick={payHandler}
                           >
-                            Place order
+                            Pay
                           </a>
                         </div>
                         <div className="mt-6 flex justify-center text-sm text-center text-gray-500">

@@ -88,7 +88,7 @@ export default function Dashboard(props) {
       <div className="lg:flex">
         <div
           // style={{ borderRight: "0.2px solid #e6e6e6" }}
-          class="flex flex-col  lg:w-64 h-screen lg:h-half bg-slate-800 px-8 py-8  product-r :bg-gray-800 :bproduct-gray-600"
+          class="flex flex-col  lg:w-64 h-half lg:h-screen bg-slate-800 px-8 py-8  product-r :bg-gray-800 :bproduct-gray-600"
         >
           <h2 class="text-3xl font-semibold text-center text-white">
             Products
@@ -124,7 +124,7 @@ export default function Dashboard(props) {
           <div class="flex flex-col justify-between flex-1 mt-6">
             <nav>
               <a
-                href="/dashboard"
+                onClick={()=>router.push("/dashboard")}
                 class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
               >
                 <svg
@@ -146,7 +146,7 @@ export default function Dashboard(props) {
               </a>
 
               <a
-                href="/adminorder"
+                onClick={()=>router.push("/adminorder")}
                 class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
               >
                 <svg
@@ -168,7 +168,7 @@ export default function Dashboard(props) {
               </a>
 
               <a
-                href="/adminuser"
+                onClick={()=>router.push("/adminuser")}
                 class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
               >
                 <svg

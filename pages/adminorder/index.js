@@ -56,9 +56,9 @@ function AdminOrder() {
   return (
     <>
       <div className="lg:flex">
-        <div class="flex flex-col lg:w-64 h-screen  px-8 py-8 bg-slate-800 bproduct-r :bg-gray-800 :bproduct-gray-600">
+        <div class="flex flex-col lg:w-64 h-half lg:h-screen  px-8 py-8 bg-slate-800 bproduct-r :bg-gray-800 :bproduct-gray-600">
           <h2 class="text-3xl font-semibold text-center text-white">
-            Products
+            Orders
           </h2>
 
           <div class="relative mt-6">
@@ -91,7 +91,7 @@ function AdminOrder() {
           <div class="flex flex-col justify-between flex-1 mt-6">
             <nav>
               <a
-                href="/dashboard"
+                onClick={()=>router.push("/dashboard")}
                 class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
               >
                 <svg
@@ -112,7 +112,10 @@ function AdminOrder() {
                 <span class="mx-4 font-medium">Products</span>
               </a>
 
-              <a class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700">
+              <a
+                onClick={()=>router.push("/adminorder")}
+                class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
+              >
                 <svg
                   href="/adminorder"
                   xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +136,7 @@ function AdminOrder() {
               </a>
 
               <a
-                href="/adminuser"
+                onClick={()=>router.push("/adminuser")}
                 class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
               >
                 <svg
@@ -162,9 +165,9 @@ function AdminOrder() {
             style={{ minHeight: "100vh" }}
             className="container p-6 mx-auto :bg-coolGray-800 :text-coolGray-100"
           >
-            <h2 className="mb-6 text-2xl font-semibold leading-tight">
+            {/* <h2 className="mb-6 text-2xl font-semibold leading-tight">
               Orders
-            </h2>
+            </h2> */}
             <div className="overflow-x-auto">
               <table className="min-w-full">
                 <thead>

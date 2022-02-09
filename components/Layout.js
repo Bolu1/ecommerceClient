@@ -395,8 +395,8 @@ export default function Layout({ title, children }) {
                   <div className="py-4 px-4 space-x-4 flex">
                       
                       <div className="relative flex-shrink-0 px-2">
-                        <img src="https://source.unsplash.com/50x50/?portrait" alt="" className="w-12 h-12 border rounded-full dark:bg-coolGray-500 dark:border-coolGray-700"/>
-                      </div>
+                      <img src={profile} alt="" className="w-12 h-12 border rounded-full dark:bg-coolGray-500 dark:border-coolGray-700"/>
+                   </div> 
 
                       <Link href="/profile" >
                         <h1 className="font-medium py-3 px-4 cursor-pointer">Profile</h1>

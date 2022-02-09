@@ -14,24 +14,27 @@ function CartScreen() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
-  // console.log(cart.cartItems)
   const [open, setOpen] = useState(true);
   const [qty, setQty] = useState(cart.cartItems.countInStock);
   const [amount, setAmount] = useState(cart.cartItems.quantity);
+  const [error, setError] = useState("dd");
+
+
   //closes the cart and routes to the home page
   const close = () => {
     router.push("/");
   };
+
   //To update the quantity of order
   const updateCart = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock <= 0) {
       // console.log("sorry")
-      window.alert("Sorry. Product is out of stock");
+      setError("Sorry. Product is out of stock");
       return;
     }
     if (data.countInStock < quantity) {
-      window.alert("Sorry, you have selected more than we have in stock");
+      setError("Sorry, you have selected more than we have in stock");
       return;
     }
     const order = { ...item, quantity };
@@ -44,7 +47,11 @@ function CartScreen() {
   };
 
   return (
+
+        <>        
+          
     <Layout title="My cart">
+
       {/* <h1 className="text-center p-10 font-bold text-4xl"></h1> */}
       {cart.cartItems.length === 0 ? (
         <div
@@ -57,6 +64,77 @@ function CartScreen() {
           </Link>
         </div>
       ) : (
+
+          <>
+
+            {error != "" && (
+            <div className="w-full fixed text-white bg-red-500">
+              <div className="container flex items-center justify-between px-6 py-4 mx-auto">
+                <div className="flex">
+                  <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
+                    <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z"></path>
+                  </svg>
+
+                  <p className="mx-3">Sorry, you have selected more than we have in stock</p>
+                </div>
+
+                <button
+                  onClick={() => setError("")}
+                  className="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6 18L18 6M6 6L18 18"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          )}
+
+    {error == "successful" && (
+            <div className="w-full fixed text-white bg-emerald-500">
+              <div className="container flex items-center justify-between px-6 py-4 mx-auto">
+                <div className="flex">
+                  <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
+                    <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z"></path>
+                  </svg>
+
+                  <p className="mx-3">Product added to bag</p>
+                </div>
+
+                <button
+                  onClick={() => setError("")}
+                  className="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6 18L18 6M6 6L18 18"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          )}
+
         //check if there are any items in the cart/bag
 
         <Transition.Root show={open} as={Fragment}>
@@ -183,7 +261,10 @@ function CartScreen() {
                           {console.log(cart.cartItems[0].quantity)}
                           <p>
                             Subtotal (
-                            {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}{" "}
+                            {cart.cartItems.reduce(
+                              (a, c) => a + c.quantity ,
+                              0
+                            )}{" "}
                             item(s))
                           </p>
                           <p>
@@ -228,8 +309,10 @@ function CartScreen() {
             </div>
           </Dialog>
         </Transition.Root>
+        </>
       )}
     </Layout>
+    </>
   );
 }
 
