@@ -5,10 +5,10 @@ import bcrypt from "bcryptjs";
 import { signToken } from "../../../utils/auth";
 import { isAdmin } from "../../../utils/auth";
 import {config} from "../upload"
-
+ 
 
 const handler = nc();
-handler.use(isAdmin)
+// handler.use(isAdmin)
 
 handler.put(async (req, res) => {
 
