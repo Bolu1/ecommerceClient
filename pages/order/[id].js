@@ -8,7 +8,8 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { usePayPalScriptReducer, PayPalButtons } from "@paypal/react-paypal-js";
-import axios from "axios";
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
 import Cookies from "js-cookie";
 import { initializePayment, verifyPayment } from "../../utils/paystack";
 
@@ -21,16 +22,14 @@ function Order({ params }) {
   const { cart, userInfo } = state;
   const [order, setOrder] = useState({});
   const [error, setError] = useState("");
-
-  //To update the quantity of order
+  const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;  
+  const stripePromise = loadStripe(publishableKey); 
 
   const getError = (err) => {
     err.response && err.response.data && err.response.data.message
       ? err.response.data.message
       : err.message;
   };
-
-  // const [{ order}, dispatch] = useReducer(reducer, {order:{}})
   const {
     shippingAddress,
     paymentMethod,
@@ -45,31 +44,22 @@ function Order({ params }) {
     deliveredAt,
   } = order;
 
-  const payHandler = async (e) => {
-    e.preventDefault();
-    // Create a Checkout Session.
-    const checkoutSession = await fetchPostJSON(
-      '/api/checkout_sessions',
-      { amount: totalPrice },
-    );
-  
-    if ((checkoutSession).statusCode === 500) {
-      console.error((checkoutSession).message);
-      return;
-    }
-  
-    // Redirect to Checkout.
-    const stripe = await getStripe();
-    const { error } = await stripe({
-      // Make the id field from the Checkout Session creation API response
-      // available to this file, so you can provide it as parameter here
-      // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
-      sessionId: checkoutSession.id,
+  const createCheckOutSession = async () => {
+    const stripe = await stripePromise;
+    const checkoutSession = await axios.post('/api/create-stripe-session', {
+      item: {
+        quantity: 4,
+        description: "Pay what do",
+        name: "Products",
+        price: totalPrice
+      },
     });
-    // If `redirectToCheckout` fails due to a browser or network
-    // error, display the localized error message to your customer
-    // using `error.message`.
-    console.warn(error.message);
+    const result = await stripe.redirectToCheckout({
+      sessionId: checkoutSession.data.id,
+    });
+    if (result.error) {
+      alert(result.error.message);
+    }
   };
 
   useEffect(() => {
@@ -325,7 +315,7 @@ function Order({ params }) {
                         <div className="mt-6">
                           <a
                             className="flex justify-center cursor-pointer items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                             onClick={payHandler}
+                             onClick={createCheckOutSession}
                           >
                             Pay
                           </a>
