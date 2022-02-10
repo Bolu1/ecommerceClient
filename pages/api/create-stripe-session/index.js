@@ -3,10 +3,16 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 async function CreateStripeSession(req, res) {
   const { item } = req.body;
 
-  const redirectURL =
+  const sredirectURL =
     process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000'
-      : 'https://stripe-checkout-next-js-demo.vercel.app';
+      ? 'http://localhost:3000/success'
+      : 'https://ecommercestuff.vercel.app/success';
+
+  
+  const credirectURL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000/cancel'
+    : 'https://ecommercestuff.vercel.app/cancel';
 
   const transformedItem = {
     price_data: {
@@ -24,8 +30,8 @@ async function CreateStripeSession(req, res) {
     payment_method_types: ['card'],
     line_items: [transformedItem],
     mode: 'payment',
-    success_url: redirectURL + '?status=success',
-    cancel_url: redirectURL + '?status=cancel',
+    success_url: sredirectURL ,
+    cancel_url: credirectURL ,
   });
 
   res.json({ id: session.id });

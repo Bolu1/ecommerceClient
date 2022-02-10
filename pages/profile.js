@@ -70,10 +70,8 @@ function Profile() {
 
   return (
     <>
-      {order && (
-        <Layout title="Profile">
-          {error != "" && error != "successful" && (
-            <div className="w-full text-white bg-red-500">
+    {error != "" && error != "successful" && (
+            <div className="w-full fixed text-white bg-red-500">
               <div className="container flex items-center justify-between px-6 py-4 mx-auto">
                 <div className="flex">
                   <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
@@ -107,7 +105,7 @@ function Profile() {
           )}
 
           {error == "successful" && (
-            <div className="w-full text-white bg-emerald-500">
+            <div className="w-full fixed text-white bg-emerald-500">
               <div className="container flex items-center justify-between px-6 py-4 mx-auto">
                 <div className="flex">
                   <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
@@ -139,6 +137,9 @@ function Profile() {
               </div>
             </div>
           )}
+      {order && (
+        <Layout title="Profile">
+          
 
           <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md :bg-gray-800 my-20">
             <h2 class="text-lg font-semibold text-gray-700 capitalize :text-white">

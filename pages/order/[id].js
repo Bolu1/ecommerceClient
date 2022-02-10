@@ -48,9 +48,9 @@ function Order({ params }) {
     const stripe = await stripePromise;
     const checkoutSession = await axios.post('/api/create-stripe-session', {
       item: {
-        quantity: 4,
-        description: "Pay what do",
-        name: "Products",
+        quantity: 1,
+        description: "Order payment",
+        name: "Ecommerce Stuff",
         price: totalPrice
       },
     });
