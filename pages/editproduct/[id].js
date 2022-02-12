@@ -79,14 +79,14 @@ export default function Example(props) {
   }, []);
 
   if (!props) {
-    return <div>Not found</div>;
+    return <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>;
   }
   return (
     <div>
 
           { error == "successful" &&(
                         
-                        <div className="w-full text-white bg-emerald-500">
+                        <div className="w-full fixed text-white bg-emerald-500">
                         <div className="container flex items-center justify-between px-6 py-4 mx-auto">
                             <div className="flex">
                                 <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
@@ -106,7 +106,7 @@ export default function Example(props) {
           )}
            { error != ""&& error!="successful" &&(
                         
-              <div className="w-full text-white bg-red-500">
+              <div className="w-full fixed text-white bg-red-500">
               <div className="container flex items-center justify-between px-6 py-4 mx-auto">
                   <div className="flex">
                       <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">

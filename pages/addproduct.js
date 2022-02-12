@@ -52,6 +52,9 @@ export default function Example() {
 
   // if user does not have this permission
   useEffect(() => {
+    if(!userInfo){
+      router.push("/");
+    }
     if (userInfo) {
       if (!userInfo.isAdmin) {
         router.push("/");

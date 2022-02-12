@@ -55,7 +55,7 @@ function Shipping() {
   return (
     <Layout title="Shipping">
       <div>
-        <div style={{ minHeight: "100vh" }} className="p-4 space-y-2 justify-center py-10 top-0 :bg-coolGray-800 dark:text-coolGray-100">
+        <div style={{ minHeight: "100vh" }} className="p-4 space-y-2 justify-center lg:py-10 top-0 :bg-coolGray-800 dark:text-coolGray-100">
           <h3 className="text-base text-center font-semibold">
             Step 2: Shipping Address
           </h3>
@@ -151,4 +151,4 @@ function Shipping() {
   );
 }
 
-export default Shipping;
+export default dynamic(() => Promise.resolve(Shipping), { ssr: false });

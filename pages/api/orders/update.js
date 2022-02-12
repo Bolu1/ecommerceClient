@@ -2,7 +2,7 @@ import nc from "next-connect";
 import db from "../../../utils/db";
 import Orders from "../../../models/Order";
 import { signToken } from "../../../utils/auth";
-import { isAuth } from "../../../utils/auth";
+import { isAdmin } from "../../../utils/auth";
 import {config} from "../upload"
 
 

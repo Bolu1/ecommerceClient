@@ -8,7 +8,7 @@ import {config} from "../upload"
  
 
 const handler = nc();
-// handler.use(isAdmin)
+handler.use(isAdmin)
 
 handler.put(async (req, res) => {
 

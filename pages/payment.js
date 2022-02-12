@@ -74,7 +74,7 @@ function Payment() {
             </div>
           </div>
         )}
-        <div className="p-4 space-y-2 justify-center py-10  top-0 :bg-coolGray-800 dark:text-coolGray-100">
+        <div style={{ minHeight: "100vh" }} className="p-4 space-y-2 justify-center py-10  top-0 :bg-coolGray-800 dark:text-coolGray-100">
           <h3 className="text-base text-center font-semibold">
             Step 3: Payment
           </h3>

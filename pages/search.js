@@ -18,7 +18,7 @@ export default function Search(props) {
   // const {products} = props
   const { dispatch, state } = useContext(Store);
   const { cart, userInfo } = state;
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(props.props);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
 
@@ -142,17 +142,17 @@ export default function Search(props) {
     }
   };
 
-  useEffect(() => {
-    try {
-      const fetchProducts = async () => {
-        const { data } = await axios.post("/api/products/search", { search });
-        setProducts(data);
-      };
-      fetchProducts();
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     const fetchProducts = async () => {
+  //       const { data } = await axios.post("/api/products/search", { search });
+  //       setProducts(data);
+  //     };
+  //     fetchProducts();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, []);
 
   return (
     <div>
@@ -385,7 +385,7 @@ export default function Search(props) {
 
 export async function getServerSideProps() {
   await db.connect();
-  const products = await Product.find().lean();
+  const products = await Product.aggregate([{$sample: {size:10}}])
   await db.disconnect();
   // console.log(products)
   return {

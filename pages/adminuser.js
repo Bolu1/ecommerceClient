@@ -26,8 +26,14 @@ function AdminUser() {
 
   useEffect(() => {
     var val;
-    if (!userInfo) {
-      router.push("/login");
+    if(!userInfo){
+      router.push("/");
+    }
+    if(userInfo){
+
+      if (!userInfo.isAdmin) {
+        router.push("/login");
+      }
     }
     const fetchOrder = async () => {
       try {

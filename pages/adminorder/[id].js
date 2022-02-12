@@ -50,7 +50,13 @@ function Order({params}) {
     useEffect(()=>{
         var val
         if(!userInfo){
-            router.push('/login?redirect=/payment')
+            router.push('/')
+        }
+        if(userInfo){
+
+          if (!userInfo.isAdmin) {
+            router.push("/login");
+          }
         }
         const fetchOrder = async () =>{
             
@@ -108,7 +114,7 @@ function Order({params}) {
 
                   { error == "successful" &&(
                                 
-                                <div className="w-full text-white bg-emerald-500">
+                                <div className="w-full text-white fixed bg-emerald-500">
                                 <div className="container flex items-center justify-between px-6 py-4 mx-auto">
                                     <div className="flex">
                                         <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">

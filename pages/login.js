@@ -46,9 +46,10 @@ function Login() {
   };
 
   return (
-    <Layout title="Login">
-      {error == "Invalid Login Parameters" && (
-        <div className="w-full text-white bg-red-500">
+    <>
+
+{error == "Invalid Login Parameters" && (
+        <div className="w-full fixed text-white bg-red-500">
           <div className="container flex items-center justify-between px-6 py-4 mx-auto">
             <div className="flex">
               <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
@@ -84,7 +85,7 @@ function Login() {
       {/* sucess alert */}
 
       {error == "auth successful" && (
-        <div className="w-full text-white bg-emerald-500">
+        <div className="w-full fixed text-white bg-emerald-500">
           <div className="container flex items-center justify-between px-6 py-4 mx-auto">
             <div className="flex">
               <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
@@ -116,6 +117,9 @@ function Login() {
           </div>
         </div>
       )}
+
+    <Layout title="Login">
+      
 
       <div style={{ minHeight: "100vh" }} className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
@@ -233,6 +237,7 @@ function Login() {
         </div>
       </div>
     </Layout>
+    </>
   );
 }
 

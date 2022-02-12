@@ -1,4 +1,4 @@
-export default function Custom404() {
+function Custom404() {
     return(
         <section className="flex items-center h-full sm:p-16 dark:bg-coolGray-900 dark:text-coolGray-100">
             <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8 space-y-8 text-center sm:max-w-md">
@@ -14,3 +14,6 @@ export default function Custom404() {
         </section>
     )
   }
+
+  
+export default dynamic(() => Promise.resolve(Custom404), { ssr: false });

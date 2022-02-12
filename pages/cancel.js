@@ -26,4 +26,5 @@ function Success() {
   )
 }
 
-export default Success
+
+export default dynamic(() => Promise.resolve(Success), { ssr: false });

@@ -45,7 +45,9 @@ export default function Example(props) {
   }
 
   useEffect(() => {
-
+    if(!userInfo){
+      router.push("/");
+    }
     if(!userInfo.isAdmin){
       router.push('/')
     }

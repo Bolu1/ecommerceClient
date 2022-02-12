@@ -18,8 +18,9 @@ export default function Home(props) {
   const { products } = props;
   const { dispatch, state } = useContext(Store);
   const { cart, userInfo } = state;
+  console.log(props)
 
-  // console.log(props.props)
+  console.log(props.props)
   // const products = [1,2,3]
   return (
     <Layout title="Ecommerce Stuff">
@@ -147,7 +148,7 @@ export default function Home(props) {
           <h1 className=" my-10  text-4xl text-center ">Products</h1>
 
           <div className="grid grid-cols-2 px-3 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {props.props.map((product) => (
+            {props.props.random.map((product) => (
               <Link
                 key={product.id}
                 href={`/products/${product._id}`}
@@ -177,7 +178,7 @@ export default function Home(props) {
           <h1 className=" my-10  text-4xl text-center ">Best Selling</h1>
 
           <div className="grid grid-cols-2 px-3 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {props.props.map((product) => (
+            {props.props.products.map((product) => (
               <Link
                 key={product.id}
                 href={`/products/${product._id}`}
@@ -235,7 +236,7 @@ export default function Home(props) {
           <h1 className=" my-10  text-4xl text-center ">Popular</h1>
 
           <div className="grid grid-cols-2 px-3 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {props.props.map((product) => (
+            {props.props.random.map((product) => (
               <Link
                 key={product.id}
                 href={`/products/${product._id}`}
@@ -265,7 +266,7 @@ export default function Home(props) {
           <h1 className=" my-10  text-4xl text-center ">New</h1>
 
           <div className="grid grid-cols-2 px-3 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {props.props.map((product) => (
+            {props.props.new.map((product) => (
               <Link
                 key={product.id}
                 href={`/products/${product._id}`}
@@ -449,13 +450,24 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
+  const PAGE_SIZE = 10
   await db.connect();
-  const products = await Product.find().lean();
+  const products = await Product.find()
+  .limit(PAGE_SIZE);
+  const random = await Product.aggregate([{$sample: {size:10}}])
+  const latest = await Product.find()
+  .sort({_id:-1})
+  .limit(PAGE_SIZE);
   await db.disconnect();
+  const data = {
+    products: products,
+    random: random,
+    new: latest
+  }
   // console.log(products)
   return {
     props: {
-      props: JSON.parse(JSON.stringify(products)),
+      props: JSON.parse(JSON.stringify(data)),
       // props: {
       //   products: products.products.map(db.convertDocToObj)
       // }

@@ -86,7 +86,7 @@ export default function Example(props) {
 
   return (
     <>        
-          {error != "" && (
+          {error != "" && error != "successful" && (
             <div className="w-full fixed text-white bg-red-500">
               <div className="container flex items-center justify-between px-6 py-4 mx-auto">
                 <div className="flex">

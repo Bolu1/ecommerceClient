@@ -68,8 +68,14 @@ export default function Dashboard(props) {
   };
 
   useEffect(() => {
-    if (!userInfo.isAdmin) {
+    if(!userInfo){
       router.push("/");
+    }
+    if(userInfo){
+
+      if (!userInfo.isAdmin) {
+        router.push("/login");
+      }
     }
 
     try {
