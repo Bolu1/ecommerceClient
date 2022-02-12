@@ -57,7 +57,9 @@ function Order({ params }) {
     const result = await stripe.redirectToCheckout({
       sessionId: checkoutSession.data.id,
     });
+    console.log(sessionId)
     if (result.error) {
+      setError(result.error.message)
       alert(result.error.message);
     }
   };
