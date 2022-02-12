@@ -1,3 +1,6 @@
+
+import dynamic from "next/dynamic";
+
 export default function Custom404() {
     return(
         <section className="flex items-center h-full sm:p-16 dark:bg-coolGray-900 dark:text-coolGray-100">

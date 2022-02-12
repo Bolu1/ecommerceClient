@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useContext } from "react";
