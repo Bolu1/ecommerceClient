@@ -9,7 +9,7 @@ async function CreateStripeSession(req, res) {
   const redirectURL =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
-      : "https://stripe-checkout-next-js-demo.vercel.app";
+      : "https://ecommercestuff.vercel.app/success";
 
   const transformedItem = {
     price_data: {
@@ -31,7 +31,8 @@ async function CreateStripeSession(req, res) {
     success_url: redirectURL + "?status=success",
     cancel_url: redirectURL + "?status=cancel",
   });
-
+  console.log("should be")
+  console.log(session)
   res.json({ id: session.id });
 }
 
