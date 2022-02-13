@@ -49,17 +49,16 @@ function Order({ params }) {
     const checkoutSession = await axios.post('/api/create-stripe-session', {
       item: {
         quantity: 4,
-        description: "Payment",
-        name: "EcommerceStuff",
+        description: "Pay what do",
+        name: "Products",
         price: totalPrice
       },
     });
+    console.warn(error.message);
     const result = await stripe.redirectToCheckout({
       sessionId: checkoutSession.data.id,
     });
-    console.log(sessionId)
     if (result.error) {
-      setError(result.error.message)
       alert(result.error.message);
     }
   };
