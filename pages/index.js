@@ -20,8 +20,11 @@ export default function Home(props) {
   const { products } = props;
   const { dispatch, state } = useContext(Store);
   const { cart, userInfo } = state;
+
+  
   return (
     <>
+    
     <Script 
       src="./TW-ELEMENTS-PATH/dist/js/index.min.js"
       />
@@ -29,7 +32,8 @@ export default function Home(props) {
       
       {/* <Carousel/> */}
       <div
-        style={{height:"60vh"}}
+        style={{height:"60vh", background:"grey"}}
+        className="bg-grey-500"
         id="carouselExampleCaptions"
         class="carousel slide relative"
         data-bs-ride="carousel"
@@ -59,7 +63,7 @@ export default function Home(props) {
         <div style={{height:"60vh"}} class="carousel-inner relative w-full overflow-hidden">
           <div class="carousel-item active relative h-half float-left w-full">
             <img
-              style={{height:"60vh"}}
+              style={{height:"60vh", width:"100%", objectFit: "contain"}}
               src={props.props.random[0].imageSrc}
               class="block w-full h-half"
               alt="..."

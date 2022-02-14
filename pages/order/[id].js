@@ -55,12 +55,13 @@ function Order({ params }) {
       },
     });
     console.warn(error.message);
-    const result = await stripe.redirectToCheckout({
-      sessionId: checkoutSession.data.id,
-    });
-    if (result.error) {
-      alert(result.error.message);
-    }
+    console.log(checkoutSession)
+    // const result = await stripe.redirectToCheckout({
+    //   sessionId: checkoutSession.data.id,
+    // });
+    // if (result.error) {
+    //   alert(result.error.message);
+    // }
   };
 
   useEffect(() => {
