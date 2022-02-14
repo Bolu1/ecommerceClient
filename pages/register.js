@@ -33,27 +33,30 @@ function Login() {
     e.preventDefault();
     if (password !== cpassword) {
       setError("Passwords don't match");
-    }
-    try {
-      const { data } = await axios.post("/api/users/register", {
-        name,
-        email,
-        password,
-      });
-      const value = JSON.stringify(data.data);
-      if (data == "This email is already in use") {
-        setError(data ? data : "successful");
-        return;
+      return
+    }else{
+
+      try {
+        const { data } = await axios.post("/api/users/register", {
+          name,
+          email,
+          password,
+        });
+        const value = JSON.stringify(data.data);
+        if (data == "This email is already in use") {
+          setError(data ? data : "successful");
+          return;
+        }
+        dispatch({ type: "USER_LOGIN", payload: data.data });
+        Cookies.set("userInfo", value);
+        localStorage.setItem("myCat", data.image);
+        router.push(redirect || "/");
+        setError("successful");
+      } catch (err) {
+        setError(
+          err.response.data ? err.response.data.message : "An error occured"
+        );
       }
-      dispatch({ type: "USER_LOGIN", payload: data.data });
-      Cookies.set("userInfo", value);
-      localStorage.setItem("myCat", data.image);
-      router.push(redirect || "/");
-      setError("successful");
-    } catch (err) {
-      setError(
-        err.response.data ? err.response.data.message : "An error occured"
-      );
     }
   };
 

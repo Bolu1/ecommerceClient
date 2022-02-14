@@ -13,6 +13,7 @@ import { useContext, useEffect } from "react";
 import { Store } from "../utils/Store";
 import Product from "../models/Product";
 import Script from 'next/script'
+// import Image from 'next/image'
 import Carousel from "../components/carousel/carousel";
 
 
@@ -20,11 +21,6 @@ export default function Home(props) {
   const { products } = props;
   const { dispatch, state } = useContext(Store);
   const { cart, userInfo } = state;
-  console.log(props);
-
-  console.log(props.props);
-
- 
   return (
     <>
     <Script 
@@ -34,6 +30,7 @@ export default function Home(props) {
       
       {/* <Carousel/> */}
       <div
+        style={{height:"60vh"}}
         id="carouselExampleCaptions"
         class="carousel slide relative"
         data-bs-ride="carousel"
@@ -60,9 +57,10 @@ export default function Home(props) {
             aria-label="Slide 3"
           ></button>
         </div>
-        <div style={{height:"50%"}} class="carousel-inner relative w-full overflow-hidden">
+        <div style={{height:"60vh"}} class="carousel-inner relative w-full overflow-hidden">
           <div class="carousel-item active relative h-half float-left w-full">
             <img
+              style={{height:"60vh"}}
               src={props.props.random[0].imageSrc}
               class="block w-full h-half"
               alt="..."
@@ -573,3 +571,4 @@ export async function getServerSideProps() {
     },
   };
 }
+517

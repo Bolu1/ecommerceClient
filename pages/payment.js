@@ -40,7 +40,7 @@ function Payment() {
 
   return (
     <Layout title="Payment Method">
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         {error == "Please select a Payment method" && (
           <div className="w-full text-white bg-red-500">
             <div className="container flex items-center justify-between px-6 py-4 mx-auto">
@@ -74,7 +74,7 @@ function Payment() {
             </div>
           </div>
         )}
-        <div style={{ minHeight: "100vh" }} className="p-4 space-y-2 justify-center py-10  top-0 :bg-coolGray-800 dark:text-coolGray-100">
+        <div  className="p-4 space-y-2 justify-center py-10  top-0 :bg-coolGray-800 dark:text-coolGray-100">
           <h3 className="text-base text-center font-semibold">
             Step 3: Payment
           </h3>
