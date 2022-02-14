@@ -51,7 +51,8 @@ function Order({ params }) {
         quantity: 4,
         description: "Pay what do",
         name: "Products",
-        price: totalPrice
+        price: totalPrice,
+        image: "https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
       },
     });
     console.warn(error.message);
