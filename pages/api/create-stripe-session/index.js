@@ -8,28 +8,32 @@ async function CreateStripeSession(req, res) {
       ? 'http://localhost:3000'
       : 'https://stripe-checkout-next-js-demo.vercel.app';
 
-  const transformedItem = {
-    price_data: {
-      currency: 'usd',
-      product_data: {
-        images: [item.image],
-        name: item.name,
-      },
-      unit_amount: item.price * 100,
-    },
-    description: item.description,
-    quantity: item.quantity,
-  };
+  // const transformedItem = {
+  //   price_data: {
+  //     currency: 'usd',
+  //     product_data: {
+  //       name: item.name,
+  //     },
+  //     unit_amount: item.price * 100,
+  //   },
+  //   description: item.description,
+  //   quantity: item.quantity,
+  // };
+  const amount =  item.price * 100
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
-    line_items: [transformedItem],
+    line_items: [
+      {
+        name: 'Custom amount donation',
+        amount: amount,
+        currency: 'usd',
+        quantity: 1,
+      },
+    ],
     mode: 'payment',
     success_url: redirectURL + '?status=success',
     cancel_url: redirectURL + '?status=cancel',
-    metadata: {
-      images: item.image,
-    },
   });
 
   res.json({ id: session.id });
