@@ -45,24 +45,16 @@ function Order({ params }) {
   } = order;
 
   const createCheckOutSession = async () => {
-    const stripe = await stripePromise;
-    const checkoutSession = await axios.post('/api/create-stripe-session', {
-      item: {
-        quantity: 4,
-        description: "Pay what do",
-        name: "Products",
-        price: totalPrice,
-        image: "https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-      },
-    });
+    const {data} = await axios.post('/api/paystack', {totalPrice});
     console.warn(error.message);
-    console.log(checkoutSession)
-    const result = await stripe.redirectToCheckout({
-      sessionId: checkoutSession.data.id,
-    });
-    if (result.error) {
-      alert(result.error.message);
-    }
+    console.log(data)
+    router.push(data.url)
+    // const result = await stripe.redirectToCheckout({
+    //   sessionId: checkoutSession.data.id,
+    // });
+    // if (result.error) {
+    //   alert(result.error.message);
+    // }
   };
 
   useEffect(() => {
