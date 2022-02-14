@@ -9,22 +9,123 @@ import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import db from "../utils/db";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Store } from "../utils/Store";
 import Product from "../models/Product";
+import Script from 'next/script'
 import Carousel from "../components/carousel/carousel";
+
 
 export default function Home(props) {
   const { products } = props;
   const { dispatch, state } = useContext(Store);
   const { cart, userInfo } = state;
-  console.log(props)
+  console.log(props);
 
-  console.log(props.props)
-  // const products = [1,2,3]
+  console.log(props.props);
+
+ 
   return (
+    <>
+    <Script 
+      src="./TW-ELEMENTS-PATH/dist/js/index.min.js"
+      />
     <Layout title="Ecommerce Stuff">
+      
       {/* <Carousel/> */}
+      <div
+        id="carouselExampleCaptions"
+        class="carousel slide relative"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
+          <button
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div style={{height:"50%"}} class="carousel-inner relative w-full overflow-hidden">
+          <div class="carousel-item active relative h-half float-left w-full">
+            <img
+              src={props.props.random[0].imageSrc}
+              class="block w-full h-half"
+              alt="..."
+            />
+            {/* <div class="carousel-caption hidden md:block absolute text-center">
+              <h5 class="text-xl">First slide label</h5>
+              <p>
+                Some representative placeholder content for the first slide.
+              </p>
+            </div> */}
+          </div>
+          <div class="carousel-item relative float-left w-full">
+            <img
+              src="https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg"
+              class="block w-full"
+              alt="..."
+            />
+            <div class="carousel-caption hidden md:block absolute text-center">
+              <h5 class="text-xl">Second slide label</h5>
+              <p>
+                Some representative placeholder content for the second slide.
+              </p>
+            </div>
+          </div>
+          <div class="carousel-item relative float-left w-full">
+            <img
+              src="https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg"
+              class="block w-full"
+              alt="..."
+            />
+            <div class="carousel-caption hidden md:block absolute text-center">
+              <h5 class="text-xl">Third slide label</h5>
+              <p>
+                Some representative placeholder content for the third slide.
+              </p>
+            </div>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev"
+        >
+          <span
+            class="carousel-control-prev-icon inline-block bg-no-repeat"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next"
+        >
+          <span
+            class="carousel-control-next-icon inline-block bg-no-repeat"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
       {/* //hero section */}
       {!userInfo && (
         <main className="mt-10 py-0 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
@@ -446,24 +547,22 @@ export default function Home(props) {
         </section>
       )}
     </Layout>
+    </>
   );
 }
 
 export async function getServerSideProps() {
-  const PAGE_SIZE = 10
+  const PAGE_SIZE = 10;
   await db.connect();
-  const products = await Product.find()
-  .limit(PAGE_SIZE);
-  const random = await Product.aggregate([{$sample: {size:10}}])
-  const latest = await Product.find()
-  .sort({_id:-1})
-  .limit(PAGE_SIZE);
+  const products = await Product.find().limit(PAGE_SIZE);
+  const random = await Product.aggregate([{ $sample: { size: 10 } }]);
+  const latest = await Product.find().sort({ _id: -1 }).limit(PAGE_SIZE);
   await db.disconnect();
   const data = {
     products: products,
     random: random,
-    new: latest
-  }
+    new: latest,
+  };
   // console.log(products)
   return {
     props: {

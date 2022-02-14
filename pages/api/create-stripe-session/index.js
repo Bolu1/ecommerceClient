@@ -2,10 +2,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 async function CreateStripeSession(req, res) {
   const { item } = req.body;
-  console.log(req.body);
-  console.log("cHEHE");
-  console.log(item);
-
   const redirectURL =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
@@ -22,8 +18,6 @@ async function CreateStripeSession(req, res) {
     description: item.description,
     quantity: item.quantity,
   };
-  console.log("trans")
-  console.log(transformedItem)
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [transformedItem],

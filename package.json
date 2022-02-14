@@ -25,7 +25,8 @@
     "react-hook-form": "^7.25.0",
     "react-paginate": "^8.1.0",
     "request": "^2.88.2",
-    "stripe": "^8.202.0"
+    "stripe": "^8.202.0",
+    "tw-elements": "^1.0.0-alpha11"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
