@@ -13,7 +13,6 @@ import { useContext, useEffect } from "react";
 import { Store } from "../utils/Store";
 import Product from "../models/Product";
 import Script from 'next/script'
-// import Image from 'next/image'
 import Carousel from "../components/carousel/carousel";
 
 
