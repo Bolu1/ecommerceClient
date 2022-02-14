@@ -47,7 +47,7 @@ function Order({ params }) {
   const createCheckOutSession = async () => {
     const {data} = await axios.post('/api/paystack', {totalPrice});
     console.warn(error.message);
-    console.log(data)
+    // console.log(data)
     router.push(data.url)
     // const result = await stripe.redirectToCheckout({
     //   sessionId: checkoutSession.data.id,

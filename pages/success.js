@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+
+
 
 function Success() {
+//   const router = useRouter()
+//   const {reference} = router.query
+//   console.log(reference)
+
+//   useEffect(async()=>{
+//     await axios.post(`/api/paystack/paystackCallback`, {
+//         reference: reference,
+//         id: id,
+//       })
+//   },[])
   return (
     <div style={{minHeight:"100vh"}} className='flex'>
         <div style={{marginTop:"40vh"}} className="mx-auto ">
