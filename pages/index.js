@@ -101,40 +101,7 @@ export default function Home(props) {
         {/* //hero section */}
         {!userInfo && (
           <main className="mt-10 py-0 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-            <div className="sm:text-center lg:text-left">
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block xl:inline">
-                  Buy and sell products with
-                </span>{" "}
-                <br />
-                <span className="block text-indigo-600 xl:inline">
-                  Ecommerce stuff
-                </span>
-              </h1>
-              <p className="mt-3 py-5 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-                lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-                fugiat aliqua.
-              </p>
-              <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                <div className="rounded-md shadow">
-                  <Link href="/register">
-                    <a className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
-                      Signup
-                    </a>
-                  </Link>
-                </div>
-                {/* <div className="mt-3 sm:mt-0 sm:ml-3">
-                  <a
-                    href="#"
-                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
-                  >
-                    Live demo
-                  </a>
-                </div> */}
-              </div>
-            </div>
-
+      
             <section className="p-6 my-6 :bg-coolGray-800 :text-coolGray-100">
               <div className="container grid grid-cols-1 gap-6 mx-auto sm:grid-cols-2 xl:grid-cols-4">
                 <div className="flex p-4 space-x-4 rounded-lg md:space-x-6 :bg-coolGray-900 :text-coolGray-100">
@@ -217,7 +184,7 @@ export default function Home(props) {
         )}
 
         <div className="bg-white">
-          <div className="max-w-2xl mx-auto py-16  sm:py-2 sm:px-2 lg:max-w-7xl lg:px-2">
+          <div className="max-w-2xl mx-auto  sm:py-2 sm:px-2 lg:max-w-7xl lg:px-2">
             <h1 className=" my-10  text-4xl text-center ">Products</h1>
 
             <div className="grid grid-cols-2 px-3 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
@@ -279,12 +246,12 @@ export default function Home(props) {
             </div>
           </div>
         </div>
-        {!userInfo && (
+
           <section className="p-4 lg:p-8 :bg-coolGray-800 :text-coolGray-100">
             <div className="container mx-auto space-y-12">
               <div className="flex flex-col overflow-hidden rounded-md shadow-sm lg:flex-row">
                 <img
-                  src="https://source.unsplash.com/640x480/?1"
+                   src={props.props.random[props.props.random.length-1].imageSrc}
                   alt=""
                   className="h-80 :bg-coolGray-500 aspect-video"
                 />
@@ -306,7 +273,6 @@ export default function Home(props) {
               </div>
             </div>
           </section>
-        )}
 
         <div className="bg-white">
           <div className="max-w-2xl mx-auto py-16  sm:py-2 sm:px-2 lg:max-w-7xl lg:px-2">
