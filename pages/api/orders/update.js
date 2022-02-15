@@ -18,8 +18,8 @@ handler.put(async (req, res) => {
   order.deliveredAt = Date.now()
   
   await order.save()
+  await db.disconnect()
   res.send("Updated")
-  await db.disconnect();
 
 });
 

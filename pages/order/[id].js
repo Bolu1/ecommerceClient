@@ -4,26 +4,17 @@ import Layout from "../../components/Layout";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { XIcon } from "@heroicons/react/outline";
-import { usePayPalScriptReducer, PayPalButtons } from "@paypal/react-paypal-js";
-import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import Cookies from "js-cookie";
-import { initializePayment, verifyPayment } from "../../utils/paystack";
 
 
 function Order({ params }) {
-  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const orderId = params.id;
   const router = useRouter();
-  const { state } = useContext(Store);
-  const { cart, userInfo } = state;
+  const {dispatch, state } = useContext(Store);
+  const {userInfo, payId } = state;
   const [order, setOrder] = useState({});
   const [error, setError] = useState("");
-  const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;  
-  const stripePromise = loadStripe(publishableKey); 
 
   const getError = (err) => {
     err.response && err.response.data && err.response.data.message
@@ -47,14 +38,16 @@ function Order({ params }) {
   const createCheckOutSession = async () => {
     const {data} = await axios.post('/api/paystack', {totalPrice});
     console.warn(error.message);
-    // console.log(data)
-    router.push(data.url)
-    // const result = await stripe.redirectToCheckout({
-    //   sessionId: checkoutSession.data.id,
-    // });
-    // if (result.error) {
-    //   alert(result.error.message);
-    // }
+    dispatch({type:'PAYID', payload:orderId})
+    Cookies.set('payId', orderId)
+    if (!data.url) {
+      setError("Something went wrong")
+      alert(result.error.message);
+    }else{
+      router.push(data.url)
+    }
+   
+    
   };
 
   useEffect(() => {
@@ -70,7 +63,6 @@ function Order({ params }) {
           },
         });
         val = data;
-        // dispatch({type:'FETCH_SUCCESS', payload:data})
       } catch (err) {
         const getError = (err) => {
           err.response && err.response.data && err.response.data.message
@@ -78,30 +70,10 @@ function Order({ params }) {
             : err.message;
         };
         console.log(err);
-        // dispatch({type:'FETCH_FAIL', payload:getError(err)})
       }
       setOrder(val);
     };
-
-    // if(!order._id || (order._id && order._id==orderId)){
     fetchOrder();
-    //
-    if (paymentMethod == "Paypal") {
-      const loadPayPalScript = async () => {
-        const { data: clientId } = await axios.get("/api/keys/paypal", {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        });
-        paypalDispatch({
-          type: "resetOptions",
-          value: {
-            "client-id": clientId,
-            currency: "USD",
-          },
-        });
-        paypalDispatch({ type: "setLoadingStatus", value: "pending" });
-      };
-      loadPayPalScript();
-    }
   }, []);
 
   return (
@@ -305,7 +277,7 @@ function Order({ params }) {
                       </p>
                       <p>${totalPrice}</p>
                     </div>
-                    {!isPaid && (
+                    {!isPaid && paymentMethod == "Stripe" && (
                       <>
                         <div className="mt-6">
                           <a

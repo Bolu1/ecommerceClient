@@ -1,18 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { Store } from "../utils/Store";
 
 function Success() {
-  //   const router = useRouter()
-  //   const {reference} = router.query
-  //   console.log(reference)
+  const router = useRouter();
+  const { state, dispatch } = useContext(Store);
+  const { payId, userInfo } = state;
+  const { reference } = router.query;
 
-  //   useEffect(async()=>{
-  //     await axios.post(`/api/paystack/paystackCallback`, {
-  //         reference: reference,
-  //         id: id,
-  //       })
-  //   },[])
+  useEffect(async () => {
+    try{
+      await axios.post(`/api/paystack/paystackCallback`, {
+        reference: reference,
+        id: payId,
+      },{
+        headers: {
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      router.push("/")
+    }catch(err){
+      router.push('/cancel')
+    }
+  }, []);
   return (
     <div style={{ minHeight: "100vh" }} className="flex">
       <div style={{ marginTop: "40vh" }} className="mx-auto ">
@@ -43,4 +55,4 @@ function Success() {
   );
 }
 
-export default Success;
+export default dynamic(() => Promise.resolve(Success), { ssr: false });

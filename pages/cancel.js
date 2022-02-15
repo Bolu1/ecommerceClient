@@ -22,7 +22,7 @@ function Success() {
                 Error
               </span>
               <p className="text-sm text-gray-600 :text-gray-200">
-                YourPayment Was Not Successful!
+                Your Payment Was Not Successful!
               </p>
             </div>
           </div>

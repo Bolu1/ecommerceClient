@@ -12,6 +12,7 @@ const initalState = {
     },
     userInfo: Cookies.get('userInfo') ? JSON.parse(Cookies.get('userInfo')): null,
     image:  null,
+    payId: Cookies.get('payId') ? (Cookies.get('payId')): null,
 }
 
 function reducer(state, action){
@@ -59,6 +60,14 @@ function reducer(state, action){
 
         case 'PROFILE':{
             return {...state, image: action.payload}
+        }
+
+        case 'PAYID':{
+            return{...state, payId: action.payload}
+        }
+
+        case 'DELETE_PAYID':{
+            return{...state, payId: null}
         }
             
         default:{
