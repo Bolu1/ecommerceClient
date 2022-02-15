@@ -29,8 +29,7 @@ function AdminOrder() {
     if (!userInfo) {
       router.push("/");
     }
-    if(userInfo){
-
+    if (userInfo) {
       if (!userInfo.isAdmin) {
         router.push("/login");
       }
@@ -62,15 +61,15 @@ function AdminOrder() {
   return (
     <>
       <div className="lg:flex">
-        <div class="flex flex-col lg:w-64 h-half lg:h-screen  px-8 py-8 bg-slate-800 bproduct-r :bg-gray-800 :bproduct-gray-600">
-          <h2 class="text-3xl font-semibold text-center text-white">
+        <div className="flex flex-col lg:w-64 h-half lg:h-screen  px-8 py-8 bg-slate-800 bproduct-r :bg-gray-800 :bproduct-gray-600">
+          <h2 className="text-3xl font-semibold text-center text-white">
             Orders
           </h2>
 
-          <div class="relative mt-6">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+          <div className="relative mt-6">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
               <svg
-                class="w-5 h-5 text-gray-400"
+                className="w-5 h-5 text-gray-400"
                 viewBox="0 0 24 24"
                 fill="none"
               >
@@ -88,17 +87,17 @@ function AdminOrder() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 type="text"
-                class="w-full py-2 pl-10 pr-4 text-gray-700 bg-white bproduct rounded-md :bg-gray-800 :text-gray-300 :bproduct-gray-600 focus:bproduct-blue-400 :focus:bproduct-blue-300 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
+                className="w-full py-2 pl-10 pr-4 text-gray-700 bg-white bproduct rounded-md :bg-gray-800 :text-gray-300 :bproduct-gray-600 focus:bproduct-blue-400 :focus:bproduct-blue-300 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
                 placeholder="Search"
               />
             </form>
           </div>
 
-          <div class="flex flex-col justify-between flex-1 mt-6">
+          <div className="flex flex-col justify-between flex-1 mt-6">
             <nav>
               <a
-                onClick={()=>router.push("/dashboard")}
-                class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
+                onClick={() => router.push("/dashboard")}
+                className="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -115,12 +114,12 @@ function AdminOrder() {
                   />
                 </svg>
 
-                <span class="mx-4 font-medium">Products</span>
+                <span className="mx-4 font-medium">Products</span>
               </a>
 
               <a
-                onClick={()=>router.push("/adminorder")}
-                class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
+                onClick={() => router.push("/adminorder")}
+                className="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
               >
                 <svg
                   href="/adminorder"
@@ -138,12 +137,12 @@ function AdminOrder() {
                   />
                 </svg>
 
-                <span class="mx-4 font-medium">Orders</span>
+                <span className="mx-4 font-medium">Orders</span>
               </a>
 
               <a
-                onClick={()=>router.push("/adminuser")}
-                class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
+                onClick={() => router.push("/adminuser")}
+                className="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +159,7 @@ function AdminOrder() {
                   />
                 </svg>
 
-                <span class="mx-4 font-medium">Users</span>
+                <span className="mx-4 font-medium">Users</span>
               </a>
             </nav>
           </div>

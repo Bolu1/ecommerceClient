@@ -158,15 +158,15 @@ export default function Search(props) {
     <div>
       <Layout>
         <div className="lg:flex">
-          <div class="flex flex-col w-full lg:w-64 h-screen  px-4 py-8 bg-white border-r :bg-gray-800 :border-gray-600">
-            <h2 class="text-3xl font-semibold text-center text-gray-800 :text-white">
+          <div className="flex flex-col w-full lg:w-64 h-screen  px-4 py-8 bg-white border-r :bg-gray-800 :border-gray-600">
+            <h2 className="text-3xl font-semibold text-center text-gray-800 :text-white">
               {category != "" ? category : "All"}
             </h2>
 
-            <div class="relative mt-6">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+            <div className="relative mt-6">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <svg
-                  class="w-5 h-5 text-gray-400"
+                  className="w-5 h-5 text-gray-400"
                   viewBox="0 0 24 24"
                   fill="none"
                 >
@@ -185,7 +185,7 @@ export default function Search(props) {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     type="text"
-                    class="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 :focus:border-blue-300 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
+                    className="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 :focus:border-blue-300 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
                     placeholder="Search"
                   />
                 </form>
@@ -195,17 +195,17 @@ export default function Search(props) {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     type="text"
-                    class="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 :focus:border-blue-300 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
+                    className="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 :focus:border-blue-300 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
                     placeholder="Search"
                   />
                 </form>
               )}
             </div>
 
-            <div class="flex flex-col justify-between flex-1 mt-6">
+            <div className="flex flex-col justify-between flex-1 mt-6">
               <nav>
                 <a
-                  class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
+                  className="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
                   onClick={allHandler}
                 >
                   <svg
@@ -223,11 +223,11 @@ export default function Search(props) {
                     />
                   </svg>
 
-                  <span class="mx-4 font-medium">All</span>
+                  <span className="mx-4 font-medium">All</span>
                 </a>
 
                 <a
-                  class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
+                  className="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
                   onClick={bagHandler}
                 >
                   <svg
@@ -245,11 +245,11 @@ export default function Search(props) {
                     />
                   </svg>
 
-                  <span class="mx-4 font-medium">Bags</span>
+                  <span className="mx-4 font-medium">Bags</span>
                 </a>
 
                 <a
-                  class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
+                  className="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
                   onClick={shoeHandler}
                 >
                   <svg
@@ -267,11 +267,11 @@ export default function Search(props) {
                     />
                   </svg>
 
-                  <span class="mx-4 font-medium">Shoes</span>
+                  <span className="mx-4 font-medium">Shoes</span>
                 </a>
 
                 <a
-                  class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
+                  className="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
                   onClick={accHandler}
                 >
                   <svg
@@ -289,11 +289,11 @@ export default function Search(props) {
                     />
                   </svg>
 
-                  <span class="mx-4 font-medium">Acessories</span>
+                  <span className="mx-4 font-medium">Acessories</span>
                 </a>
 
                 <a
-                  class="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
+                  className="flex items-center px-4 py-2 cursor-pointer mt-5 text-gray-600 transition-colors duration-200 transform rounded-md :text-gray-400 hover:bg-gray-200 :hover:bg-gray-700 :hover:text-gray-200 hover:text-gray-700"
                   onClick={shirtHandler}
                 >
                   <svg
@@ -311,7 +311,7 @@ export default function Search(props) {
                     />
                   </svg>
 
-                  <span class="mx-4 font-medium">Shirts</span>
+                  <span className="mx-4 font-medium">Shirts</span>
                 </a>
               </nav>
             </div>
@@ -385,7 +385,7 @@ export default function Search(props) {
 
 export async function getServerSideProps() {
   await db.connect();
-  const products = await Product.aggregate([{$sample: {size:10}}])
+  const products = await Product.aggregate([{ $sample: { size: 10 } }]);
   await db.disconnect();
   // console.log(products)
   return {

@@ -37,7 +37,6 @@ function Profile() {
   }, []);
 
   const submitHandler = async (e) => {
-    e.preventDefault();
     if (password !== confirmPassword) {
       setError("Passwords don't match");
       return;
@@ -70,86 +69,87 @@ function Profile() {
 
   return (
     <>
-    {error != "" && error != "successful" && (
-            <div className="w-full fixed text-white bg-red-500">
-              <div className="container flex items-center justify-between px-6 py-4 mx-auto">
-                <div className="flex">
-                  <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
-                    <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z"></path>
-                  </svg>
+      {error != "" && error != "successful" && (
+        <div className="w-full fixed text-white bg-red-500">
+          <div className="container flex items-center justify-between px-6 py-4 mx-auto">
+            <div className="flex">
+              <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
+                <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z"></path>
+              </svg>
 
-                  <p className="mx-3">{error}</p>
-                </div>
-
-                <button
-                  onClick={() => setError("")}
-                  className="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 18L18 6M6 6L18 18"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
+              <p className="mx-3">{error}</p>
             </div>
-          )}
 
-          {error == "successful" && (
-            <div className="w-full fixed text-white bg-emerald-500">
-              <div className="container flex items-center justify-between px-6 py-4 mx-auto">
-                <div className="flex">
-                  <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
-                    <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z"></path>
-                  </svg>
+            <button
+              onClick={() => setError("")}
+              className="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none"
+            >
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 18L18 6M6 6L18 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
 
-                  <p className="mx-3">Profile update Successful</p>
-                </div>
+      {error == "successful" && (
+        <div className="w-full fixed text-white bg-emerald-500">
+          <div className="container flex items-center justify-between px-6 py-4 mx-auto">
+            <div className="flex">
+              <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current">
+                <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z"></path>
+              </svg>
 
-                <button
-                  onClick={() => setError("")}
-                  className="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 18L18 6M6 6L18 18"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
+              <p className="mx-3">Profile update Successful</p>
             </div>
-          )}
+
+            <button
+              onClick={() => setError("")}
+              className="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none"
+            >
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 18L18 6M6 6L18 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
       {order && (
         <Layout title="Profile">
-          
-
-          <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md :bg-gray-800 my-20">
-            <h2 class="text-lg font-semibold text-gray-700 capitalize :text-white">
+          <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md :bg-gray-800 my-20">
+            <h2 className="text-lg font-semibold text-gray-700 capitalize :text-white">
               Account settings
             </h2>
 
             <form className="py-5 ">
-              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <div>
-                  <label class="text-gray-700 :text-gray-200" for="username">
+                  <label
+                    className="text-gray-700 :text-gray-200"
+                    for="username"
+                  >
                     Username
                   </label>
                   <input
@@ -158,13 +158,13 @@ function Profile() {
                     required
                     id="username"
                     type="text"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"
                   />
                 </div>
 
                 <div>
                   <label
-                    class="text-gray-700 :text-gray-200"
+                    className="text-gray-700 :text-gray-200"
                     for="emailAddress"
                   >
                     Email Address
@@ -175,12 +175,15 @@ function Profile() {
                     required
                     id="emailAddress"
                     type="email"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"
                   />
                 </div>
 
                 <div>
-                  <label class="text-gray-700 :text-gray-200" for="password">
+                  <label
+                    className="text-gray-700 :text-gray-200"
+                    for="password"
+                  >
                     Password
                   </label>
                   <input
@@ -189,13 +192,13 @@ function Profile() {
                     id="password"
                     type="password"
                     minlength="8"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"
                   />
                 </div>
 
                 <div>
                   <label
-                    class="text-gray-700 :text-gray-200"
+                    className="text-gray-700 :text-gray-200"
                     for="passwordConfirmation"
                   >
                     Password Confirmation
@@ -205,7 +208,7 @@ function Profile() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     id="passwordConfirmation"
                     type="password"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md :bg-gray-800 :text-gray-300 :border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 :focus:border-blue-300 focus:outline-none focus:ring"
                   />
                 </div>
               </div>
@@ -224,11 +227,11 @@ function Profile() {
                 </div>
               </fieldset>
 
-              <div class="flex justify-end mt-6">
+              <div className="flex justify-end mt-6">
                 <button
                   onClick={submitHandler}
                   type="submit"
-                  class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700"
+                  className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700"
                 >
                   Update
                 </button>
