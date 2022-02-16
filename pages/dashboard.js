@@ -275,8 +275,7 @@ export default function Dashboard(props) {
               </div>
             </div>
           ) : (
-            <h1 className="text-center self-center lg:ml-80 md:ml-60 sm:ml-20  text-4xl ">
-              No Item Found
+            <h1 style={{minHeight:"30vh"}} className="text-center self-center lg:ml-80 md:ml-60 sm:ml-20  text-4xl ">
             </h1>
           )}
         </>
