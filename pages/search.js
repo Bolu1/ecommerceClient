@@ -158,7 +158,7 @@ export default function Search(props) {
     <div>
       <Layout>
         <div className="lg:flex">
-          <div className="flex flex-col w-full lg:w-64 h-screen  px-4 py-8 bg-white border-r :bg-gray-800 :border-gray-600">
+          <div className="flex flex-col w-full lg:w-64 h-screen  px-4  bg-white border-r :bg-gray-800 :border-gray-600">
             <h2 className="text-3xl font-semibold text-center text-gray-800 :text-white">
               {category != "" ? category : "All"}
             </h2>

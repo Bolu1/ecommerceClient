@@ -53,12 +53,12 @@ export default function Home(props) {
               aria-label="Slide 3"
             ></button>
           </div>
-          <div className="carousel-inner relative w-full overflow-hidden">
-            <div className="carousel-item active relative float-left w-full">
+          <div className="carousel-inner relative w-full overflow-hidden ">
+            <div className="carousel-item active relative float-left w-full h-96">
               <img
-                style={{height:"90vh"}}
+                // style={{height:"90vh"}}
                 src={props.props.random[0].imageSrc}
-                className="block w-full"
+                className="block w-full h-96 object-contain"
                 alt="..."
               />
               {/* <div className="carousel-caption hidden md:block absolute text-center">
@@ -68,11 +68,11 @@ export default function Home(props) {
                 </p>
               </div> */}
             </div>
-            <div className="carousel-item relative float-left w-full">
+            <div className="carousel-item relative float-left w-full h-96">
               <img
-                style={{height:"90vh"}}
+                // style={{height:"90vh"}}
                 src={props.props.random[1].imageSrc}
-                className="block w-full"
+                className="block w-full h-96 object-contain"
                 alt="..."
               />
               {/* <div className="carousel-caption hidden md:block absolute text-center">
@@ -82,11 +82,11 @@ export default function Home(props) {
                 </p>
               </div> */}
             </div>
-            <div className="carousel-item relative float-left w-full">
+            <div className="carousel-item relative float-left w-full h-96">
               <img
-                style={{height:"90vh"}}
+                // style={{height:"90vh"}}
                 src={props.props.random[2].imageSrc}
-                className="block w-full"
+                className="block w-full h-96 object-contain"
                 alt="..."
               />
               {/* <div className="carousel-caption hidden md:block absolute text-center">
@@ -199,7 +199,7 @@ export default function Home(props) {
                       <img
                         src={product.imageSrc}
                         alt={product.imageAlt}
-                        className="w-80 h-80 object-center object-cover group-hover:opacity-75"
+                        className="w-80 h-80 object-centerh-96 group-hover:opacity-75"
                       />
                     </div>
                     <h3 className="mt-4 text-sm text-gray-700">
@@ -231,7 +231,7 @@ export default function Home(props) {
                       <img
                         src={product.imageSrc}
                         alt={product.imageAlt}
-                        className="w-80 h-80 object-center object-cover group-hover:opacity-75"
+                        className="w-80 h-80 object-centerh-96 group-hover:opacity-75"
                       />
                     </div>
                     <h3 className="mt-4 text-sm text-gray-700">
@@ -290,7 +290,7 @@ export default function Home(props) {
                       <img
                         src={product.imageSrc}
                         alt={product.imageAlt}
-                        className="w-80 h-80 object-center object-cover group-hover:opacity-75"
+                        className="w-80 h-80 object-centerh-96 group-hover:opacity-75"
                       />
                     </div>
                     <h3 className="mt-4 text-sm text-gray-700">
@@ -322,7 +322,7 @@ export default function Home(props) {
                       <img
                         src={product.imageSrc}
                         alt={product.imageAlt}
-                        className="w-80 h-80 object-center object-cover group-hover:opacity-75"
+                        className="w-80 h-80 object-centerh-96 group-hover:opacity-75"
                       />
                     </div>
                     <h3 className="mt-4 text-sm text-gray-700">
@@ -498,10 +498,10 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 4;
   await db.connect();
   const products = await Product.find().limit(PAGE_SIZE);
-  const random = await Product.aggregate([{ $sample: { size: 10 } }]);
+  const random = await Product.aggregate([{ $sample: { size: 4 } }]);
   const latest = await Product.find().sort({ _id: -1 }).limit(PAGE_SIZE);
   await db.disconnect();
   const data = {
